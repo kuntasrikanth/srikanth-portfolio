@@ -1,0 +1,7 @@
+/* hero: current role and a few numbers that back it up */
+.hero-role{margin:2px 0 0;font:500 12px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-wrap:balance}
+.hero-role b{font-weight:600;color:var(--fg)}
+.hero-facts{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.hero-facts li{display:flex;align-items:baseline;gap:7px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--chip);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hero-facts b{font:600 15px/1 var(--sans);color:var(--fg);letter-spacing:-.01em}
+@media(max-width:640px){.hero-role{font-size:10.5px;letter-spacing:.08em}.hero-facts li{padding:6px 11px;font-size:12px}.hero-facts b{font-size:14px}}

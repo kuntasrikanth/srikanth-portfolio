@@ -1,0 +1,21 @@
+{
+  "name": "Srikanth Kunta",
+  "short_name": "Srikanth",
+  "description": "Portfolio of Srikanth Kunta, Social Media & eCommerce Marketing Executive.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#fbfaf7",
+  "theme_color": "#3f86d6",
+  "icons": [
+    {
+      "src": "images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

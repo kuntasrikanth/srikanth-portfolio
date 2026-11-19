@@ -13,7 +13,7 @@ const TAU = Math.PI * 2;
 const HZ = .618; // horizon, as a fraction of the scene height from the top
 
 /* ---------- the work box ---------- */
-const CATS = [["best", "Case studies"], ["video", "Video"]];
+const CATS = [["best", "Cases"], ["video", "Video"]];
 const CATLABEL = Object.fromEntries(CATS);
 const tabs = $("#tabs"), works = $("#works"), ALLCARDS = [...document.querySelectorAll("#grid .card")], SPANS = new Map(ALLCARDS.map(c => [c, [...c.classList].find(k => /^s\d+$/.test(k))]));
 let curCat = "best", curList = ALLCARDS, curIdx = 0;

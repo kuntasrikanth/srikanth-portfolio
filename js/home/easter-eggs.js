@@ -18,7 +18,7 @@
     <div class="panel glass" id="findPanel" role="region" aria-label="Easter eggs found">
       <div class="ph"><b>Easter eggs</b><span></span></div>
       <ol>${ITEMS.map(([id, l]) => `<li data-id="${id}" tabindex="0"><i aria-hidden="true"></i><span></span></li>`).join("")}</ol>
-      <button class="hint" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg>Show me everything<em>Hint</em></button>
+      <button class="hint" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg>Show all<em>Hint</em></button>
     </div>`;
   document.body.appendChild(box);
   const head = box.querySelector(".egg"), count = head.querySelector(".n"), ring = head.querySelector(".ring .fg"), crack = head.querySelector(".crack"), tally = box.querySelector(".ph span");

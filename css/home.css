@@ -1154,22 +1154,11 @@ h1 em{font-style:italic}
 @media (max-width:640px){.hero-cta{gap:8px}.hbtn{padding:11px 16px}}
 @media (prefers-reduced-motion:reduce){.hbtn,.hello .cta,.more-work a,.card .more,.card .more::after{transition:none}}
 
-/* ---- Apple glass (Control Center), only where there is something behind it: the hero buttons and the dock.
+/* ---- Apple glass (Control Center), only where there is something behind it: the dock.
    Below the fold the buttons stay solid (glass over white just turns flat grey), and only 5 elements blur. ---- */
 :root{--g-fill:rgba(255,255,255,.55);--g-edge:rgba(255,255,255,.7);--g-top:rgba(255,255,255,.9);--g-text:#1d1d1f;--g-lift:0 8px 24px rgba(20,40,80,.14)}
 :root[data-sky="night"]{--g-fill:rgba(255,255,255,.12);--g-edge:rgba(255,255,255,.2);--g-top:rgba(255,255,255,.32);--g-text:#fff;--g-lift:0 8px 24px rgba(0,0,0,.35)}
 @media (prefers-color-scheme:dark){:root:not([data-sky]){--g-fill:rgba(255,255,255,.12);--g-edge:rgba(255,255,255,.2);--g-top:rgba(255,255,255,.32);--g-text:#fff;--g-lift:0 8px 24px rgba(0,0,0,.35)}}
-.hbtn.glass-btn{gap:10px;padding:0 20px 0 6px;border:1px solid var(--g-edge);background:var(--g-fill);color:var(--g-text);
-  -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
-  box-shadow:inset 0 1px 0 var(--g-top),inset 0 -1px 0 rgba(0,0,0,.06),var(--g-lift);transition:background-color .2s ease,box-shadow .2s ease}
-.hbtn.glass-btn:hover{background:color-mix(in srgb,var(--g-fill) 70%,#fff)}
-.hbtn.glass-btn:active{box-shadow:inset 0 2px 6px rgba(0,0,0,.18)}
-.hbtn.glass-btn:focus-visible{box-shadow:inset 0 1px 0 var(--g-top),0 0 0 4px var(--btn-halo)}
-/* the one solid thing inside the glass: an accent circle with the icon */
-.hbtn .ico{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--btn);color:var(--btn-ink);box-shadow:0 2px 6px rgba(0,0,0,.2)}
-.hbtn .ico svg{width:17px;height:17px}
-.hbtn .hi{width:19px;height:19px;flex:none}
-.hbtn.pri{gap:8px;box-shadow:0 6px 18px color-mix(in srgb,var(--btn) 35%,transparent)}
 /* the dock: same glass recipe, pill ends */
 .navwrap .glass{border-radius:999px;-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);
   box-shadow:inset 0 1px 0 var(--g-top),inset 0 -1px 0 rgba(0,0,0,.06),0 10px 30px rgba(10,20,40,.18)}
@@ -1177,7 +1166,7 @@ h1 em{font-style:italic}
 .mark a,.navwrap .catsnav .cats button,.navwrap .ctrl .season-btn,.navwrap .ctrl .when{border-radius:999px}
 /* phones: Email me across the full width, the two glass buttons side by side under it */
 @media (max-width:640px){.hero-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:360px;margin-left:auto;margin-right:auto}
-  .hbtn{justify-content:center}.hbtn.pri{grid-column:1/-1}.hbtn.glass-btn{padding:0 14px 0 6px;justify-content:flex-start}}
+  .hbtn.pri{grid-column:1/-1}}
 
 /* Apple has no outlined-blue pill: "More work" is filled (the only button on its screen); channel pills are equal grey
    pills, regular weight, no lift; the tab counts readable (at least 60% on the faded tab) */
@@ -1191,3 +1180,14 @@ h1 em{font-style:italic}
 .ch-list a:hover{transform:none}
 @media(max-width:640px){.ch-list li{grid-template-columns:1fr 1fr 1fr;gap:6px}.ch-place{grid-column:1/-1;text-align:center;margin-top:6px}.ch-list a{padding:0 8px}}
 .navwrap .catsnav .cats button small{opacity:.85}
+
+/* hero buttons, apple.com style: one filled pill, the rest plain blue text; no icons, no badges, no shadows.
+   Filled uses the fill blue (white on #1f6fd1 by day, dark on #9fc3ff at night); text uses the link blue. */
+.hbtn{gap:0;padding:0 22px;border:0;border-radius:980px;background:none;box-shadow:none;color:var(--link);
+  font:400 17px/1.17648 var(--sans);letter-spacing:-.022em;transition:background-color .12s linear}
+.hbtn:hover{background:color-mix(in srgb,var(--link) 7%,transparent);transform:none}
+.hbtn.pri{background:var(--btn);color:var(--btn-ink);box-shadow:none}
+.hbtn.pri:hover{background:var(--btn-hover)}
+.hbtn.pri:active{background:var(--btn-active)}
+.hbtn:focus-visible,.hbtn.pri:focus-visible{outline:none;box-shadow:0 0 0 4px var(--btn-halo)}
+@media (max-width:640px){.hero-cta{display:flex;justify-content:center;gap:4px;max-width:none}.hbtn{padding:0 14px}.hbtn.pri{padding:0 26px}}

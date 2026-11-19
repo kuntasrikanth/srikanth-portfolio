@@ -1178,3 +1178,16 @@ h1 em{font-style:italic}
 /* phones: Email me across the full width, the two glass buttons side by side under it */
 @media (max-width:640px){.hero-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:360px;margin-left:auto;margin-right:auto}
   .hbtn{justify-content:center}.hbtn.pri{grid-column:1/-1}.hbtn.glass-btn{padding:0 14px 0 6px;justify-content:flex-start}}
+
+/* Apple has no outlined-blue pill: "More work" is filled (the only button on its screen); channel pills are equal grey
+   pills, regular weight, no lift; the tab counts readable (at least 60% on the faded tab) */
+.more-work a{background:var(--btn);color:var(--btn-ink);box-shadow:none;border:0;font-weight:400;font-size:17px}
+.more-work a:hover{background:var(--btn-hover);transform:none}
+.more-work a:active{background:var(--btn-active)}
+.more-work a:focus-visible{box-shadow:0 0 0 4px var(--btn-halo)}
+.more-work a span{font-size:1.35em;line-height:0;transform:translateY(-1px)}
+.ch-list li{display:grid;grid-template-columns:72px repeat(3,1fr);gap:8px;align-items:center;max-width:640px;margin:0 auto}
+.ch-list a{justify-content:center;font:400 17px/1.17648 var(--sans);letter-spacing:-.022em;transform:none}
+.ch-list a:hover{transform:none}
+@media(max-width:640px){.ch-list li{grid-template-columns:1fr 1fr 1fr;gap:6px}.ch-place{grid-column:1/-1;text-align:center;margin-top:6px}.ch-list a{padding:0 8px}}
+.navwrap .catsnav .cats button small{opacity:.85}

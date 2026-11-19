@@ -272,7 +272,7 @@ vec3 cloudCol(vec3 c,vec2 p,vec2 sp,vec2 mp,vec3 sunC){
  lit=mix(lit,mix(vec3(.8,.82,.86),vec3(.15,.17,.22),uNight),uOver*.65);sh=mix(sh,mix(vec3(.36,.4,.48),vec3(.03,.035,.05),uNight),uOver*.8);
  vec3 col=mix(sh,lit,clamp(c.x,0.,1.))+max(c.x-1.,0.)*.25;
  col+=c.y*exp(-length(p-sp)*5.)*1.1*uSun.z*sunC;
- col+=c.y*exp(-length(p-mp)*6.)*.7*uMoon.z*vec3(.8,.86,1.);
+ col+=c.y*exp(-length(p-mp)*4.2)*.85*uMoon.z*vec3(.8,.86,1.);
  return col;
 }
 void main(){
@@ -306,7 +306,7 @@ void main(){
   float ang=atan(p.y-sp.y,p.x-sp.x);
   col+=sunC*pow(abs(sin(ang*9.+uT*.05)),24.)*exp(-ds*3.5)*.1*uSun.z;
   if(uMoon.z>.01){
-   float dm=length(p-mp),mr=.027;vec2 l=(p-mp)/mr;
+   float dm=length(p-mp),mr=.055;vec2 l=(p-mp)/mr;
    if(dot(l,l)<1.){
     float sq=sqrt(1.-l.y*l.y),ph=uMoon.w;float xx=ph<.5?l.x:-l.x;
     float lit=smoothstep(-.08,.08,xx-cos(ph*6.2831853)*sq);
@@ -314,7 +314,7 @@ void main(){
     vec3 mcol=mix(Hc*.6+vec3(.03,.035,.05),mc,lit);
     col=mix(col,mcol,smoothstep(1.,.92,length(l))*uMoon.z);
    }
-   col+=vec3(.75,.82,1.)*(exp(-dm*12.)*.3+exp(-dm*3.5)*.13)*uMoon.z;
+   col+=vec3(.75,.82,1.)*(exp(-dm*7.)*.34+exp(-dm*2.2)*.16)*uMoon.z;
   }
   if(uOver>.01){float s2=fbm(vec2(p.x*1.6+uCloud*.8,hy*3.)+3.);
    vec3 shc=mix(mix(vec3(.6,.64,.7),vec3(.83,.85,.89),s2),mix(vec3(.04,.045,.06),vec3(.1,.11,.15),s2),uNight);
@@ -1357,7 +1357,7 @@ function placeTip() { const r = fx.getBoundingClientRect(), b = ZBOX[zHover], ab
 /* Kundali: a North Indian rashi chart drawn around the moon */
 function drawKundali(c, moon, a) {
   if (a < .01 || moon.vis < .05) return;
-  const Rr = 64 * U * (mobile ? .85 : 1), mr = .027 * H, x = moon.x, y = moon.y, t = S.t;
+  const Rr = 64 * U * (mobile ? .85 : 1), mr = .055 * H, x = moon.x, y = moon.y, t = S.t;
   c.save();
   const clipTop = 54; c.beginPath(); c.rect(0, clipTop, W, hzY - clipTop); c.arc(x, y, mr * 1.9, 0, TAU, true); c.clip("evenodd");
   c.translate(x, y); c.rotate(Math.sin(t * .05) * .08);

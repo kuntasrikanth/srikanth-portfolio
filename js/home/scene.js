@@ -11,12 +11,15 @@ const rand = (a, b) => a + Math.random() * (b - a);
 const sstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 const TAU = Math.PI * 2;
 const HZ = .618; // horizon, as a fraction of the scene height from the top
+// the sky, the light and the card fields draw one still frame straight away and only start animating once the page
+// has finished loading (or the visitor touches something first), so the animation never slows the first load
+let LIVE = false;
 
 /* ---------- the work box ---------- */
 const CATS = [["best", "Featured"], ["social", "Social & video"], ["ai", "AI"], ["data", "Data & analytics"]];
 const CATLABEL = Object.fromEntries(CATS);
 const tabs = $("#tabs"), works = $("#works"), ALLCARDS = [...document.querySelectorAll("#grid .card")], SPANS = new Map(ALLCARDS.map(c => [c, [...c.classList].find(k => /^s\d+$/.test(k))]));
-let curCat = "best", curList = ALLCARDS, curIdx = 0;
+let curCat = "best";
 CATS.forEach(([key, lab], i) => {
   const n = key === "all" ? ALLCARDS.length : ALLCARDS.filter(c => c.dataset.cats.split(" ").includes(key)).length;
   const b = document.createElement("button");
@@ -35,43 +38,8 @@ function filterCards(key) {
   // motion reels stay small (three a row)
   const rest = vis.filter(c => !c.classList.contains("feat") && !c.classList.contains("reel"));
   vis.forEach(c => c.classList.add(key === "all" ? SPANS.get(c) : c.classList.contains("reel") ? "s4" : c.classList.contains("bento") ? "s6" : c.classList.contains("feat") || (c === rest[rest.length - 1] && rest.length % 2) ? "s12" : "s6"));
-  curList = vis; curIdx = 0; buildThumbs(); show(0);
   window.dispatchEvent(new Event("cardsmoved"));
 }
-// one at a time: the selected project fills the stage; details on the right
-const shot = $("#shot"), shotVis = $("#shotVis"), info = $("#info"), strip = $("#tstrip");
-const ARW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
-const EXT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>';
-function show(i, anim) {
-  if (!curList.length) { shotVis.innerHTML = ""; info.innerHTML = '<p class="empty">New work for this category is on its way.</p>'; return; }
-  curIdx = (i + curList.length) % curList.length;
-  const c = curList[curIdx], q = s => c.querySelector(s);
-  shot.dataset.glyph = c.dataset.glyph;
-  shotVis.innerHTML = q(".vis").innerHTML;
-  if (anim) { shot.classList.remove("swap"); void shot.offsetWidth; shot.classList.add("swap"); }
-  const link = c.dataset.link, chips = c.dataset.cats.split(" ").map(k => `<span>${CATLABEL[k]}</span>`).join("");
-  info.innerHTML = `<p class="meta">${q(".meta").textContent}</p><h3>${q("h3").textContent}</h3><p class="desc">${q(".desc").textContent}</p>
-    <div class="facts"><div>Domain <span class="chipset">${chips}</span></div><div>Type <b>${c.dataset.type || "Project"}</b></div>${q(".tags") ? `<div>Made with <span class="chipset">${[...q(".tags").children].map(tag => `<span>${tag.textContent}</span>`).join("")}</span></div>` : ""}<div>Project <b>${curIdx + 1} of ${curList.length}</b></div></div>
-    <div class="ctas">${link ? `<a class="pri" href="${link}" ${link.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>${c.dataset.type.includes("Case study") ? "Read case study" : "Open project"} ${EXT}</a>` : `<a class="pri" href="#work">Read case study ${ARW}</a>`}<a href="#work" data-act="grid">See all in grid</a></div>`;
-  [...strip.children].forEach((t, k) => t.setAttribute("aria-current", String(k === curIdx)));
-  const t = strip.children[curIdx]; if (t) { const l = t.offsetLeft, r = l + t.offsetWidth; if (l < strip.scrollLeft) strip.scrollTo({ left: l - 6, behavior: "smooth" }); else if (r > strip.scrollLeft + strip.clientWidth) strip.scrollTo({ left: r - strip.clientWidth + 6, behavior: "smooth" }); }
-}
-function buildThumbs() {
-  strip.innerHTML = "";
-  curList.forEach((c, k) => { const b = document.createElement("button"); b.type = "button"; b.className = "thumb"; b.setAttribute("aria-label", c.querySelector("h3").textContent);
-    b.innerHTML = `<div class="mini">${c.querySelector(".vis").innerHTML}</div>`; b.addEventListener("click", () => show(k, true)); strip.appendChild(b); });
-}
-$("#prev").addEventListener("click", () => show(curIdx - 1, true));
-$("#next").addEventListener("click", () => show(curIdx + 1, true));
-works.addEventListener("keydown", e => { if (works.dataset.view !== "one") return; if (e.key === "ArrowRight") show(curIdx + 1, true); if (e.key === "ArrowLeft") show(curIdx - 1, true); });
-function setView(v) {
-  works.dataset.view = v; store.set("fold.view", v);
-  works.querySelectorAll(".views button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
-  window.dispatchEvent(new Event("cardsmoved"));
-}
-works.querySelectorAll(".views button").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
-info.addEventListener("click", e => { if (e.target.closest("[data-act=grid]")) { e.preventDefault(); setView("grid"); } });
-setView("grid");
 filterCards("best");
 
 /* ---------- time + theme ---------- */
@@ -1469,7 +1437,7 @@ const tipEl2 = document.getElementById("millTip"); let millTipT = 0, millTipOff 
 /* ================= Frame ================= */
 let last = performance.now(), parX = 0, perfN = 0, perfSum = 0, LAST = null;
 function frame(nowT) {
-  requestAnimationFrame(frame);
+  if (LIVE) requestAnimationFrame(frame);
   const dt = Math.min(.05, (nowT - last) / 1000); last = nowT;
   if (!visible || document.hidden) return;
   const adt = dt * (RM ? .15 : 1);
@@ -1643,7 +1611,7 @@ function drawLight(sun, moon, e, A, dt) {
 const STR = []; window.prismStreaks = STR;
 let LT = 0, lastL = performance.now(), litN = 0;
 function lightLoop(now) {
-  requestAnimationFrame(lightLoop);
+  if (LIVE) requestAnimationFrame(lightLoop);
   const dt = Math.min(.05, (now - lastL) / 1000); lastL = now;
   if (document.hidden || !LAST) return;
   LT += dt * (RM ? .15 : 1);
@@ -1654,7 +1622,7 @@ function lightLoop(now) {
 requestAnimationFrame(lightLoop);
 
 /* ================= Cards: edges lit by the light, a holographic code field on hover ================= */
-const CARDS = [...document.querySelectorAll("#grid .card, #shot")].map(el => ({ el, cv: el.querySelector(".holo"), rim: el.querySelector(".rim"), rw: 0, rh: 0, lit: 0, glyph: el.dataset.glyph, hov: 0, hovT: 0, mx: .5, my: .5, rect: null, cells: null, w: 0, h: 0, rest: false }));
+const CARDS = [...document.querySelectorAll("#grid .card")].map(el => ({ el, cv: el.querySelector(".holo"), rim: el.querySelector(".rim"), rw: 0, rh: 0, lit: 0, glyph: el.dataset.glyph, hov: 0, hovT: 0, mx: .5, my: .5, rect: null, cells: null, w: 0, h: 0, rest: false }));
 function measureCards() { const sy = scrollY; CARDS.forEach(k => { const r = k.el.getBoundingClientRect(); k.rect = { x: r.left, y: r.top + sy, w: r.width, h: r.height }; }); }
 new ResizeObserver(() => { measureCards(); CARDS.forEach(k => k.cells = null); }).observe(document.getElementById("works"));
 addEventListener("cardsmoved", () => { requestAnimationFrame(() => { measureCards(); layoutLight(); CARDS.forEach(k => k.cells = null); }); });
@@ -1711,7 +1679,7 @@ function lightCards() {
 }
 // the code field: a dithered patch of the card's glyph, densest toward the lower right
 const DPR2 = Math.min(devicePixelRatio || 1, 1.5), CELL = 15;
-// some cards draw small filled icons (from images/marks) instead of a character: Paytm coins, Footer box, Vudio clapper
+// a card can draw a small filled icon (from an image) instead of its glyph character; none do at the moment
 const MARK_SRC = {}; // every card draws its glyph as text
 const SPR = {};
 function tintMark(img, rgb) { const cv = document.createElement("canvas"); cv.width = cv.height = 128; const x = cv.getContext("2d");
@@ -1728,7 +1696,7 @@ function buildCells(k) {
   for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
     const x = i * CELL + CELL / 2, y = j * CELL + CELL / 2, d = Math.hypot((x - fx0) / R, (y - fy0) / (R * .8));
     const m = clamp(1.05 - d, 0, 1), hsh = Math.abs(Math.sin(i * 12.9898 + j * 78.233) * 43758.5453) % 1;
-    if (m <= 0 || hsh > m * (k.glyph === "v" ? .45 : 1.15)) continue; // Vudio: fewer marks
+    if (m <= 0 || hsh > m * 1.15) continue;
     cells.push([x, y, m, hsh]);
   }
   k.cells = cells; k.rest = false;
@@ -1760,7 +1728,7 @@ CARDS.forEach(k => {
 new MutationObserver(() => CARDS.forEach(k => k.rest = false)).observe(root, { attributes: true, attributeFilter: ["data-sky"] });
 let lastC = performance.now();
 function cardLoop(now) {
-  requestAnimationFrame(cardLoop);
+  if (LIVE) requestAnimationFrame(cardLoop);
   const dt = Math.min(.05, (now - lastC) / 1000); lastC = now;
   for (const k of CARDS) {
     if (!k.cv || k.el.classList.contains("gone")) continue;
@@ -1772,4 +1740,11 @@ function cardLoop(now) {
 // the ASCII hologram field: only on the case-study bento cards (Best work, Mobile, Desktop), not the motion reels
 requestAnimationFrame(cardLoop);
 measureCards();
+const goLive = () => {
+  if (LIVE) return; LIVE = true;
+  const t = performance.now(); last = lastL = lastC = t;
+  requestAnimationFrame(frame); requestAnimationFrame(lightLoop); requestAnimationFrame(cardLoop);
+};
+if (document.readyState === "complete") setTimeout(goLive, 200); else addEventListener("load", () => setTimeout(goLive, 200), { once: true });
+["pointerdown", "keydown", "wheel", "touchstart"].forEach(t => addEventListener(t, goLive, { once: true, passive: true }));
 })();

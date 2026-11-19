@@ -104,6 +104,12 @@
     raf = run ? requestAnimationFrame(frame) : 0;
   }
   size(); addEventListener("resize", size);
-  new IntersectionObserver(es => es.forEach(e => { run = e.isIntersecting; if (run && !raf) { last = 0; raf = requestAnimationFrame(frame); } }), { threshold: .05 }).observe(scene);
+  // sparkles start once the page has loaded (or on the first touch), so they never slow the first load
+  let live = false;
+  const kick = () => { if (live && run && !raf) { last = 0; raf = requestAnimationFrame(frame); } };
+  const goLive = () => { if (live) return; live = true; kick(); };
+  if (document.readyState === "complete") setTimeout(goLive, 200); else addEventListener("load", () => setTimeout(goLive, 200), { once: true });
+  ["pointerdown", "keydown", "wheel", "touchstart"].forEach(t => addEventListener(t, goLive, { once: true, passive: true }));
+  new IntersectionObserver(es => es.forEach(e => { run = e.isIntersecting; kick(); }), { threshold: .05 }).observe(scene);
   window.skyExtras = { at: t => { T = t; } }; // for testing: jump the timeline
 })();

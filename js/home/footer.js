@@ -50,7 +50,11 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
     c.globalAlpha = .8; c.font = `${W * .05}px "Geist", system-ui, sans-serif`; c.fillText("grown organically · no budget", W / 2, H * .86);
   };
   const paintCfg = () => { document.getElementById("cfgVid").src = art(480, 600, drawSpace); document.getElementById("cfgPic").src = art(480, 600, drawStats); };
-  paintCfg(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintCfg);
+  // the channel dialog's two pictures are only drawn when there is time after the page has loaded, or when the dialog opens
+  let cfgPainted = false;
+  const ensureCfg = () => { if (cfgPainted) return; cfgPainted = true; paintCfg(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintCfg); };
+  const idle = window.requestIdleCallback || (f => setTimeout(f, 1));
+  if (document.readyState === "complete") idle(ensureCfg); else addEventListener("load", () => idle(ensureCfg), { once: true });
 
   // rooms: open, close, blur behind
   let lastFocus = null;
@@ -70,7 +74,7 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
   const crest = `<svg class="crest" viewBox="0 0 80 96" aria-hidden="true"><path d="M8 6h64v40c0 24-18 38-32 46C26 84 8 70 8 46z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M14 12h52v34c0 20-15 32-26 39C29 78 14 66 14 46z" fill="none" stroke="currentColor" stroke-width=".9"/><g fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="40" cy="44" rx="20" ry="7.5"/><ellipse cx="40" cy="44" rx="20" ry="7.5" transform="rotate(60 40 44)"/><ellipse cx="40" cy="44" rx="20" ry="7.5" transform="rotate(-60 40 44)"/></g><circle cx="40" cy="44" r="3" fill="currentColor"/></svg>`;
   const hd = (l, r) => `<div class="run"><span>${l}</span><span>${r}</span></div>`;
   const sc = h => `<div class="scr" aria-hidden="true">${h}</div>`;
-  const ch = (n, t) => `<div class="chap"><span>Chapter ${n}</span><b>${n}</b></div><h5>${t}</h5><div class="crule"></div>`;
+  const ch = (n, t) => `<div class="chap"><span>Chapter ${n}</span><b>${n}</b></div><h3>${t}</h3><div class="crule"></div>`;
   // the AI UGC workflow, drawn as a pipeline: script, video, voice, edit, post
   const PIPE = (() => {
     const steps = [["script", "Claude"], ["video", "Kling AI"], ["voice", "Fish Audio"], ["edit", "DaVinci"], ["post", "3 accounts"]];
@@ -117,7 +121,7 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
     { h: `${hd("Chapter 9", "Ideas nobody asked for")}${ch(9, "Ideas nobody asked for")}<p>Our channel had 132,000 followers and 85 million reel views, but almost no sales came from it. Nobody asked me to, but I audited the website: product names in capitals, no Google description, no reviews, no blog. I proposed an AI agent for unanswered comments, and made an in-store announcement with Fish Audio.</p><p>The owner turned it down. I didn't give up.</p>${sc("audit · agent · announcement")}` },
     { h: `${hd("Chapter 10", "The reserve stock idea")}${ch(10, "The reserve stock idea")}<p>Out of 20 units, sell 10 in the shop and keep 10 for followers. To claim one, share our post to your story and send a screenshot. Bookings open on Fridays, 10 a week; you collect between 9:00 and 9:30 on Saturday.</p><p>More shares, more reach, no ad spend. Two weeks later the owner said yes, and I was promoted.</p>${SK.split}` },
     { h: `${hd("Chapter 11", "What came next")}${ch(11, "What came next")}<p>I rebuilt our Google Maps listings, brought 3D product models to Shopify, and built the AI agent: a reply bot for our DMs and comments.</p><p>Since September 2026 I've been Social Media &amp; eCommerce Marketing Executive, running our Shopify store too. I built Follow &amp; Save pages for Tipton and Oldham, and a review card for our 500+ weekly parcels. My placement started on 12 October, at 30 hours a week.</p>${SK.curve}` },
-    { h: `${hd("Closing", "")}${ch(12, "Say hello")}<p>What I really want to do is help small businesses grow with today's technology and smart ideas.</p><p>If you'd like to work together, pick a card on the desk. The envelope is for email, the stamp for LinkedIn, the ticket for my YouTube channel.</p>${sc("hook → hold → payoff")}${SK.hello}<div class="colo">Birmingham, 2026.</div>` },
+    { h: `${hd("Closing", "")}${ch(12, "Say hello")}<p>What I really want to do is help small businesses grow with today's technology and smart ideas.</p><p>If you'd like to work together, email me at <a href="mailto:kuntasrikanth00@gmail.com">kuntasrikanth00@gmail.com</a> or message me on <a href="https://www.linkedin.com/in/srikanthkunta" target="_blank" rel="noopener">LinkedIn</a>.</p>${sc("hook → hold → payoff")}${SK.hello}<div class="colo">Birmingham, 2026.</div>` },
     { c: "cover back", h: `<div class="frame"><div class="cd" style="margin-top:auto">Srikanth · Social Media &amp; eCommerce Marketing Executive</div></div>` }
   ];
   const book = document.getElementById("book"), nL = FACES.length / 2;
@@ -128,7 +132,7 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
   for (let i = 0; i < nL; i++) {
     const lf = document.createElement("div"); lf.className = "leaf"; lf.style.zIndex = nL - i;
     lf.innerHTML = face(FACES[i * 2], "a") + face(FACES[i * 2 + 1], "b");
-    lf.addEventListener("click", () => turn(lf.classList.contains("flip") ? -1 : 1));
+    lf.addEventListener("click", e => { if (e.target.closest("a")) return; turn(lf.classList.contains("flip") ? -1 : 1); });
     book.appendChild(lf);
   }
   const leaves = [...book.querySelectorAll(".leaf")]; let at = 0;
@@ -184,7 +188,7 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
   // the channel card: the windmill and the desk polaroid both open it
   let cfgUrl = CONTACT.youtube;
   const cfgArt = document.getElementById("cfgArt"), STILL = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const openCfg = (url = CONTACT.youtube) => { cfgUrl = url; document.getElementById("cfgGo").href = url; openRoom(document.getElementById("cfgRoom")); };
+  const openCfg = (url = CONTACT.youtube) => { ensureCfg(); cfgUrl = url; document.getElementById("cfgGo").href = url; openRoom(document.getElementById("cfgRoom")); };
   // tap either polaroid to swap them, with a fluid move: each one glides, scales and turns from its old place to its new one (FLIP)
   cfgArt.addEventListener("click", e => {
     if (!e.target.closest(".ph")) return;

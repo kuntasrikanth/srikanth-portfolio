@@ -108,15 +108,21 @@
     shards.forEach(s => { s.t += dt; s.vy += .00012 * dt; s.x += s.vx * dt; s.y += s.vy * dt; s.r += s.vr * dt * .02;
       s.g.setAttribute("transform", `translate(${s.x.toFixed(2)} ${s.y.toFixed(2)}) rotate(${(s.r * 57).toFixed(1)})`); s.g.setAttribute("opacity", Math.max(0, 1 - s.t / 900).toFixed(2)); });
   }
-  (function loop(n) {
-    requestAnimationFrame(loop); const dt = Math.min(50, n - last); last = n;
+  // turns once now, then keeps turning after the page has loaded (or on the first touch), so it never slows the first load
+  let live = false;
+  function loop(n) {
+    if (live) requestAnimationFrame(loop); const dt = Math.min(50, n - last); last = n;
     if (document.hidden) return;
     // dragging: ease toward where the pointer put it (no snapping between pointer events); let go: glide on, then settle back to the slow turn
     if (drag) { const k = 1 - Math.exp(-dt / 70), y0 = yaw; yaw += (tYaw - yaw) * k; pitch += (tPitch - pitch) * k; vel = vel * .8 + (yaw - y0) / Math.max(1, dt) * .2; }
     else { vel += (BASE - vel) * Math.min(1, dt * .0012); yaw += vel * dt; pitch += (-.32 - pitch) * Math.min(1, dt * .0012); }
     if (!broken && charge > 0 && n - lastPump > 1200) charge = Math.max(0, charge - dt * .0005);
     window.prismYaw = yaw; draw(); stepMotes(dt); stepShards(dt);
-  })(last);
+  }
+  loop(last);
+  const goLive = () => { if (live) return; live = true; last = performance.now(); requestAnimationFrame(loop); };
+  if (document.readyState === "complete") setTimeout(goLive, 200); else addEventListener("load", () => setTimeout(goLive, 200), { once: true });
+  ["pointerdown", "keydown", "wheel", "touchstart"].forEach(t => addEventListener(t, goLive, { once: true, passive: true }));
   // one click: swap prism and crystal. Clicks in quick succession: charge up instead
   let clicks = [], single = null;
   function morph() {

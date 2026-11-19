@@ -163,7 +163,7 @@ ${step(9, `<div class="mg-card" style="left:40px;right:40px;top:40px;padding:50p
 
     const show = (s, t, a, b) => {
       const on = t >= a && t < b, o = on ? Math.min(span(t, a, a + .3), 1 - span(t, b - .3, b)) : 0;
-      s.style.visibility = on ? "visible" : "hidden"; s.style.opacity = o; return on ? t - a : -1;
+      s.style.visibility = on ? "inherit" : "hidden"; s.style.opacity = o; return on ? t - a : -1;
     };
     const UPD = [
       // 1 product prep
@@ -205,8 +205,10 @@ ${step(9, `<div class="mg-card" style="left:40px;right:40px;top:40px;padding:50p
     }
     let raf = 0, t0 = 0, visible = false, paused = false;
     const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const loop = now => { if (!t0) t0 = now; render((now - t0) / 1000); raf = requestAnimationFrame(loop); };
-    const play = () => { if (raf || RM || paused) return; raf = requestAnimationFrame(loop); };
+    // a copy inside a closed pop-up never animates (the pop-up is fixed to the screen, so it always counts as "on screen")
+    const shut = () => !!el.closest(".room:not(.on)");
+    const loop = now => { if (shut()) { stop(); return; } if (!t0) t0 = now; render((now - t0) / 1000); raf = requestAnimationFrame(loop); };
+    const play = () => { if (raf || RM || paused || shut()) return; raf = requestAnimationFrame(loop); };
     const stop = () => { cancelAnimationFrame(raf); raf = 0; };
     const api = {
       duration: DUR, render,
@@ -222,8 +224,8 @@ ${step(9, `<div class="mg-card" style="left:40px;right:40px;top:40px;padding:50p
   // on the page: every [data-ugc-motion] box gets its own copy; proof videos play while on screen
   const boot = () => {
     const mounted = new Map();
-    // each copy is built (and its stills fetched) only when it comes near the screen; the pop-up's copy when it opens
-    const boxes = [...document.querySelectorAll("#grid [data-ugc-motion], .room [data-ugc-motion]")];
+    // each copy is built (and its stills fetched) only when it comes near the screen; the pop-up's copy only when it opens (footer.js)
+    const boxes = [...document.querySelectorAll("#grid [data-ugc-motion]")];
     if ("IntersectionObserver" in window) {
       const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !mounted.has(e.target)) { mounted.set(e.target, mount(e.target)); io.unobserve(e.target); } }), { rootMargin: "400px 0px" });
       boxes.forEach(el => io.observe(el));

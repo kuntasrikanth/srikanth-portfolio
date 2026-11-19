@@ -205,7 +205,8 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
   window.openChannel = openCh;
   // the AI ads room: the workflow motion graphic beside the finished ad, restarted from the top each time
   const ugcRoom = document.getElementById("ugcRoom");
-  const openUgc = () => { openRoom(ugcRoom); const el = ugcRoom.querySelector("[data-ugc-motion]"), m = window.ugcMotion && window.ugcMotion.get(el); if (m) m.restart(); };
+  const openUgc = () => { openRoom(ugcRoom); const el = ugcRoom.querySelector("[data-ugc-motion]"), M = window.ugcMotion; if (!el || !M) return;
+    if (!M.has(el) && window.UGCMotion) M.set(el, window.UGCMotion.mount(el)); const m = M.get(el); if (m) m.restart(); };
   document.querySelectorAll('[data-open="ugc"]').forEach(a => a.addEventListener("click", e => { e.preventDefault(); openUgc(); }));
   document.getElementById("openCh").addEventListener("click", () => openCh(CONTACT.youtube));
   document.getElementById("openAbout").addEventListener("click", openBook);

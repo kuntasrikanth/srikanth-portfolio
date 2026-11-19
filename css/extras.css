@@ -1,10 +1,11 @@
 /* hero: current role and a few numbers that back it up */
-.hero-role{margin:2px 0 0;font:500 12px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-wrap:balance}
+.hero-role{margin:2px 0 0;font:500 13px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-wrap:balance}
 .hero-role b{font-weight:600;color:var(--fg)}
 .hero-facts{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .hero-facts li{display:flex;align-items:baseline;gap:7px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--chip);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .hero-facts b{font:600 15px/1 var(--sans);color:var(--fg);letter-spacing:-.01em}
-@media(max-width:640px){.hero-role{font-size:10.5px;letter-spacing:.08em}.hero-facts li{padding:6px 11px;font-size:12px}.hero-facts b{font-size:14px}}
+/* phones: the four numbers as a 2 x 2 grid of tiles, number above its label */
+@media(max-width:640px){.hero-role{font-size:13px;letter-spacing:.04em}.hero-facts{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;max-width:360px;margin-left:auto;margin-right:auto}.hero-facts li{flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 6px;border-radius:14px;font-size:13px;line-height:1.2;text-align:center}.hero-facts b{font-size:17px}}
 
 /* hero: one tap to email, the CV or LinkedIn */
 .hero-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:10px}
@@ -18,7 +19,7 @@
 .hello .cta.alt{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1px var(--line)}
 /* case studies end on what happened */
 .card .result{margin:12px 0 0;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--chip);font-size:14px;line-height:1.5;color:var(--fg)}
-.card .result b{display:inline-block;margin-right:6px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.card .result b{display:inline-block;margin-right:6px;font:600 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
 /* below the case studies: the way to the rest of the work */
 .more-work{display:flex;justify-content:center;margin:34px 0 0}
@@ -28,3 +29,15 @@
 
 /* visitors who ask for less motion: no animations or transitions anywhere (the sky, motion graphic and videos also stop in JS) */
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* the social channels I run: one row per branch, every link a 44px pill */
+.channels{margin:40px auto 0;max-width:900px;text-align:center}
+.channels h3{margin:0 0 14px;font:500 13px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ch-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ch-list li{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
+.ch-place{min-width:72px;font:600 15px/1 var(--sans);color:var(--fg);text-align:right}
+.ch-list a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--chip);color:var(--fg);font:600 14px/1 var(--sans);text-decoration:none;transition:transform .2s var(--ease)}
+.ch-list a small{font:500 13px/1 var(--mono);color:var(--muted)}
+.ch-list a:hover{transform:translateY(-1px)}
+.ch-list a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media(max-width:640px){.ch-list li{gap:6px}.ch-place{flex-basis:100%;text-align:center;margin-top:6px}.ch-list a small{display:none}}

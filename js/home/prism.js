@@ -108,9 +108,13 @@
     shards.forEach(s => { s.t += dt; s.vy += .00012 * dt; s.x += s.vx * dt; s.y += s.vy * dt; s.r += s.vr * dt * .02;
       s.g.setAttribute("transform", `translate(${s.x.toFixed(2)} ${s.y.toFixed(2)}) rotate(${(s.r * 57).toFixed(1)})`); s.g.setAttribute("opacity", Math.max(0, 1 - s.t / 900).toFixed(2)); });
   }
+  let drawn = false;
   (function loop(n) {
     requestAnimationFrame(loop); const dt = Math.min(50, n - last); last = n;
     if (document.hidden) return;
+    if (drawn && !drag && window.skyCalm && window.skyCalm()) return; // still sky (see scene.js)
+    if (drag && window.skyWake) window.skyWake(800); // turning the prism moves the light
+    drawn = true;
     // dragging: ease toward where the pointer put it (no snapping between pointer events); let go: glide on, then settle back to the slow turn
     if (drag) { const k = 1 - Math.exp(-dt / 70), y0 = yaw; yaw += (tYaw - yaw) * k; pitch += (tPitch - pitch) * k; vel = vel * .8 + (yaw - y0) / Math.max(1, dt) * .2; }
     else { vel += (BASE - vel) * Math.min(1, dt * .0012); yaw += vel * dt; pitch += (-.32 - pitch) * Math.min(1, dt * .0012); }

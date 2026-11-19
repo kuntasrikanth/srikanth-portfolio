@@ -98,7 +98,9 @@
   }
 
   function frame(now) {
-    const dt = Math.min(.05, last ? (now - last) / 1000 : 0); last = now; T += dt;
+    const dt = Math.min(.05, last ? (now - last) / 1000 : 0); last = now;
+    if (window.skyCalm && window.skyCalm()) { raf = run ? requestAnimationFrame(frame) : 0; return; } // still sky (see scene.js)
+    T += dt;
     c.setTransform(DPR, 0, 0, DPR, 0, 0); c.clearRect(0, 0, W, H);
     sparkles(T, dt); drone(T); rocket(T, dt);
     raf = run ? requestAnimationFrame(frame) : 0;

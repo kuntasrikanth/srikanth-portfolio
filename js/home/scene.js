@@ -138,6 +138,7 @@ S.amt = FXT(S.season); S.amtT = FXT(S.season);
 const seasonBtn = $("#seasonBtn"), pop = $("#pop");
 function apply(m, season, save) {
   const modeChanged = m !== S.mode;
+  wake(2200);
   S.mode = m; S.season = season; lastSeason[m] = season; S.amtT = FXT(season);
   root.setAttribute("data-sky", m);
   dn.setAttribute("aria-checked", String(m === "day"));
@@ -389,6 +390,22 @@ if (gl) {
   }
 }
 if (!gl) scene.classList.add("nogl");
+/* Without a graphics card (some virtual machines and remote desktops, blocked drivers, and the lab browsers behind
+   PageSpeed and Lighthouse) WebGL runs on the CPU and every sky frame is read back to the page: about half a second
+   per frame on a slow phone, with the page frozen in between. There the sky paints once and holds still, and moves
+   only while someone is touching it. Devices that turn out too slow for the animation (under about 12 frames a
+   second) switch to the same mode. A normal GPU never takes this path. */
+const SOFT = (() => {
+  if (!gl) return false;
+  try { const x = gl.getExtension("WEBGL_debug_renderer_info"); return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(String(gl.getParameter(x ? x.UNMASKED_RENDERER_WEBGL : gl.RENDERER))); }
+  catch (e) { return false; }
+})();
+if (SOFT) glScale = .5;
+var calmOn = SOFT, wakeUntil = 0, needPaint = 2, skyN = 0;
+function calm() { return calmOn && performance.now() > wakeUntil && needPaint <= 0; }
+function wake(ms) { wakeUntil = Math.max(wakeUntil || 0, performance.now() + (ms || 0)); needPaint = Math.max(needPaint || 0, 1); }
+window.skyCalm = calm; window.skyWake = wake; window.skyQuality = () => calmOn ? (SOFT ? "still (software graphics)" : "still (slow device)") : "animated";
+setInterval(() => { if (calmOn) wake(1100); }, 60000); // keep the clock pill and the live sky roughly current
 function sizeGL() {
   if (!gl) return;
   let k = Math.min(DPR, 1.5) * glScale;
@@ -401,7 +418,7 @@ function sizeGL() {
    It is painted in the scene's own units: 1.2H wide (at L*W = 2.3H), from 0.38H above the horizon to the bottom. */
 const PAINTED = false; // off: the land is drawn in code, not the oil painting
 const landImg = new Image(); let landReady = false; window.landImg = landImg;
-landImg.onload = () => { landReady = true; if (W) setLand(landNow, true); };
+landImg.onload = () => { landReady = true; if (W) setLand(landNow, true); wake(); };
 if (PAINTED) landImg.src = "images/sky-landscape.webp";
 /* ================= The cliff (drawn once per resize) ================= */
 const CLIFF = [[-.02, -.1], [.045, -.083], [.1, -.062], [.15, -.05], [.2, -.032], [.25, -.008], [.29, .026], [.318, .058], [.334, .092], [.346, .13], [.366, .2], [.4, .3], [.45, .45], [.5, .62]];
@@ -1454,7 +1471,13 @@ function resize() {
   L = clamp(H * 2.3 / W, .45, 1.7); U = clamp(H / 620, .62, 1.15) * (mobile ? .9 : 1);
   fx.width = Math.round(W * DPR); fx.height = Math.round(H * DPR);
   sizeGL(); buildCliff(); setLand(landKey(S.season), true); landPrev.width = landPrev.height = 1; buildBirds(); buildOrchard(); buildParticles(); zW = 0; boats = [];
+  wake();
 }
+// touching the sky wakes it (only matters in the still mode above)
+fx.addEventListener("pointermove", () => wake(1500), { passive: true });
+fx.addEventListener("pointerdown", () => wake(3000), { passive: true });
+range.addEventListener("input", () => wake(1500));
+whenBtn.addEventListener("click", () => wake(1500));
 setInterval(healLand, 2000);
 document.addEventListener("visibilitychange", healLand);
 [fx, landC, landPrev].forEach(cv => cv.addEventListener("contextrestored", () => resize()));
@@ -1472,6 +1495,9 @@ function frame(nowT) {
   requestAnimationFrame(frame);
   const dt = Math.min(.05, (nowT - last) / 1000); last = nowT;
   if (!visible || document.hidden) return;
+  // still mode: draw only when asked, or until a day/night or season fade has finished
+  if (calmOn && nowT > wakeUntil && Math.abs((S.mode === "night" ? 1 : 0) - S.night) < .002 && landFade >= 1) { if (needPaint <= 0) return; needPaint--; }
+  skyN++;
   const adt = dt * (RM ? .15 : 1);
   S.t += adt;
   const target = S.mode === "night" ? 1 : 0;
@@ -1544,7 +1570,7 @@ function frame(nowT) {
     range.setAttribute("aria-valuetext", txt);
   }
   // keep frames smooth on slower GPUs by drawing the sky at a lower resolution
-  if (gl) { perfSum += dt; if (++perfN === 90) { if (perfSum / perfN > .026 && glScale > .5) { glScale -= .15; sizeGL(); } perfN = 0; perfSum = 0; } }
+  if (gl && !calmOn) { perfSum += dt; if (++perfN === 90) { const avg = perfSum / perfN; if (avg > .08) calmOn = true; else if (avg > .026 && glScale > .5) { glScale -= .15; sizeGL(); } perfN = 0; perfSum = 0; } }
 }
 requestAnimationFrame(frame);
 
@@ -1641,11 +1667,13 @@ function drawLight(sun, moon, e, A, dt) {
 }
 /* the light runs on its own clock, so it keeps moving while the sky is scrolled away */
 const STR = []; window.prismStreaks = STR;
-let LT = 0, lastL = performance.now(), litN = 0;
+let LT = 0, lastL = performance.now(), litN = 0, litSky = -1;
 function lightLoop(now) {
   requestAnimationFrame(lightLoop);
   const dt = Math.min(.05, (now - lastL) / 1000); lastL = now;
   if (document.hidden || !LAST) return;
+  if (calm() && litSky === skyN) return; // still sky: draw the light once per sky frame
+  litSky = skyN;
   LT += dt * (RM ? .15 : 1);
   if (scrollY > LG.top + LG.h) return;
   drawLight(LAST.sun, LAST.moon, LAST.e, LAST.A, dt);

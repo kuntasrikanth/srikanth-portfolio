@@ -56,6 +56,16 @@ h2{margin:0 0 18px;font:500 13px/1 var(--mono);letter-spacing:.16em;text-transfo
 footer{margin:56px 0 0;padding:28px 0 40px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between;color:var(--muted)}
 footer a{color:var(--fg)}
 @media (max-width:760px){.list{grid-template-columns:1fr}.item{padding:20px}.item h3{font-size:28px}.top{flex-wrap:wrap;padding:16px 0}.name{font-size:22px}.btn{min-height:44px;padding:0 14px;font-size:13.5px}header.intro{padding:36px 0 20px}}
+
+/* Apple-style buttons (same as the home page): pill, 400, 17px, colour-only hover, one filled button */
+:root{--btn:var(--accent);--btn-ink:#fff;--btn-tint:color-mix(in srgb,var(--btn) 8%,transparent);--btn-halo:color-mix(in srgb,var(--btn) 55%,transparent)}
+@media (prefers-color-scheme:dark){:root{--btn-ink:#0b1020;--btn-tint:color-mix(in srgb,var(--btn) 12%,transparent)}}
+.btn,.links a{min-height:44px;padding:11px 22px;border:0;border-radius:980px;background:transparent;color:var(--btn);box-shadow:inset 0 0 0 1px var(--btn);font:400 17px/1.17648 var(--sans);letter-spacing:-.022em;text-decoration:none;transition:background-color .12s linear}
+.btn:hover,.links a:hover{background:var(--btn-tint)}
+.btn.pri{background:var(--btn);color:var(--btn-ink);box-shadow:none}
+.btn.pri:hover{background:color-mix(in srgb,var(--btn) 88%,#000)}
+.btn:focus-visible,.links a:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--btn),0 0 0 4px var(--btn-halo)}
+.btn.pri:focus-visible{box-shadow:0 0 0 4px var(--btn-halo)}
 </style>
 </head>
 <body>

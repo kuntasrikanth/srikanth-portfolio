@@ -1120,3 +1120,31 @@ h1 em{font-style:italic}
 /* inline links and buttons inside sentences: a larger invisible hit area, so the text and line spacing stay as they are */
 .hello p a,.specialty,.hero-image.portrait{position:relative}
 .hello p a::after,.specialty::after,.hero-image.portrait::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}
+
+/* Apple-style buttons in my own blue: a pill, regular weight, 17px, and on hover only the colour changes (nothing
+   moves). One filled button per screen; the rest are outlined; inside cards it is a plain text link.
+   Day: white on #1f6fd1 (4.9:1). Night: dark text on #9fc3ff (10.6:1); white on Apple's #2997ff is only 3:1. */
+:root{--btn:var(--accent);--btn-ink:#fff;--btn-hover:color-mix(in srgb,var(--btn) 88%,#000);--btn-active:color-mix(in srgb,var(--btn) 80%,#000);--btn-tint:color-mix(in srgb,var(--btn) 8%,transparent);--btn-halo:color-mix(in srgb,var(--btn) 55%,transparent)}
+:root[data-sky="night"]{--btn-ink:#0b1020;--btn-hover:color-mix(in srgb,var(--btn) 85%,#fff);--btn-active:color-mix(in srgb,var(--btn) 75%,#fff);--btn-tint:color-mix(in srgb,var(--btn) 12%,transparent)}
+@media (prefers-color-scheme:dark){:root:not([data-sky]){--btn-ink:#0b1020;--btn-hover:color-mix(in srgb,var(--btn) 85%,#fff);--btn-active:color-mix(in srgb,var(--btn) 75%,#fff);--btn-tint:color-mix(in srgb,var(--btn) 12%,transparent)}}
+.hbtn,.hello .cta,.more-work a{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 22px;border:0;border-radius:980px;
+  font:400 17px/1.17648 var(--sans);letter-spacing:-.022em;text-decoration:none;white-space:nowrap;
+  background:transparent;color:var(--btn);box-shadow:inset 0 0 0 1px var(--btn);transform:none;transition:background-color .12s linear,color .12s linear}
+.hbtn:hover,.hello .cta:hover,.more-work a:hover{background:var(--btn-tint);transform:none}
+.hbtn.pri,.hello .cta:not(.alt){background:var(--btn);color:var(--btn-ink);box-shadow:none}
+.hbtn.pri:hover,.hello .cta:not(.alt):hover{background:var(--btn-hover)}
+.hbtn.pri:active,.hello .cta:not(.alt):active{background:var(--btn-active)}
+.hbtn:focus-visible,.hello .cta:focus-visible,.more-work a:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--btn),0 0 0 4px var(--btn-halo)}
+.hbtn.pri:focus-visible,.hello .cta:not(.alt):focus-visible{box-shadow:0 0 0 4px var(--btn-halo)}
+.hello .cta{margin-top:14px}.hello .cta+.cta{margin-left:8px}
+/* inside cards: Apple's third kind, a text link with an arrow that does not move */
+.more{min-height:44px;padding:0;gap:6px;border:0;border-radius:0;background:none;color:var(--btn);font:400 17px/1.17648 var(--sans);letter-spacing:-.022em;text-decoration:none;transition:color .12s linear}
+.more:hover{background:none;text-decoration:underline;text-underline-offset:3px}
+.card:hover .more svg{transform:none}
+.more:focus-visible{outline:none;border-radius:6px;box-shadow:0 0 0 4px var(--btn-halo)}
+/* channel links: no lift either */
+.ch-list a:hover{transform:none;background:var(--btn-tint)}
+.hello .cta.alt{background:transparent;color:var(--btn);box-shadow:inset 0 0 0 1px var(--btn)}.hello .cta.alt:hover{background:var(--btn-tint)}
+/* phones: the three hero buttons stay on one row */
+@media (max-width:640px){.hero-cta{gap:8px}.hbtn{padding:11px 16px}}
+@media (prefers-reduced-motion:reduce){.hbtn,.hello .cta,.more-work a,.more{transition:none}}

@@ -50,7 +50,7 @@ function show(i, anim) {
   shotVis.innerHTML = q(".vis").innerHTML;
   if (anim) { shot.classList.remove("swap"); void shot.offsetWidth; shot.classList.add("swap"); }
   const link = c.dataset.link, chips = c.dataset.cats.split(" ").map(k => `<span>${CATLABEL[k]}</span>`).join("");
-  info.innerHTML = `<p class="meta">${q(".meta").textContent}</p><h3>${q("h3").textContent}</h3><p class="desc">${q(".desc").textContent}</p>
+  info.innerHTML = `<p class="meta">${q(".meta").textContent}</p><p class="ttl">${q("h3").textContent}</p><p class="desc">${q(".desc").textContent}</p>
     <div class="facts"><div>Domain <span class="chipset">${chips}</span></div><div>Type <b>${c.dataset.type || "Project"}</b></div>${q(".tags") ? `<div>Made with <span class="chipset">${[...q(".tags").children].map(tag => `<span>${tag.textContent}</span>`).join("")}</span></div>` : ""}<div>Project <b>${curIdx + 1} of ${curList.length}</b></div></div>
     <div class="ctas">${link ? `<a class="pri" href="${link}" ${link.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>${c.dataset.type.includes("Case study") ? "Read case study" : "Open project"} ${EXT}</a>` : `<a class="pri" href="#work">Read case study ${ARW}</a>`}<a href="#work" data-act="grid">See all in grid</a></div>`;
   [...strip.children].forEach((t, k) => t.setAttribute("aria-current", String(k === curIdx)));
@@ -402,7 +402,7 @@ function sizeGL() {
 const PAINTED = false; // off: the land is drawn in code, not the oil painting
 const landImg = new Image(); let landReady = false; window.landImg = landImg;
 landImg.onload = () => { landReady = true; if (W) setLand(landNow, true); };
-if (PAINTED) landImg.src = "images/embedded/9c95d36c46.webp";
+if (PAINTED) landImg.src = "images/sky-landscape.webp";
 /* ================= The cliff (drawn once per resize) ================= */
 const CLIFF = [[-.02, -.1], [.045, -.083], [.1, -.062], [.15, -.05], [.2, -.032], [.25, -.008], [.29, .026], [.318, .058], [.334, .092], [.346, .13], [.366, .2], [.4, .3], [.45, .45], [.5, .62]];
 const ROCKS = [[.352, .118, .034], [.378, .078, .02], [.405, .063, .013], [.437, .072, .01], [.392, .158, .028], [.428, .12, .017], [.468, .09, .011], [.505, .07, .007], [.368, .222, .042], [.45, .175, .02]];
@@ -1427,7 +1427,7 @@ fx.addEventListener("pointerdown", e => {
   const [x, y] = local(e); hideHint();
   if (PHONE.matches) {
     if (nearBody(x, y)) { dragging = true; fx.setPointerCapture(e.pointerId); e.preventDefault(); return; }
-    if (nearMill(x, y)) { S.gust = Math.min(2, S.gust + 1.4); millTipOff = 60; tipEl2.classList.remove("on"); setTimeout(() => window.openConfig && window.openConfig(), 450); }
+    if (nearMill(x, y)) { S.gust = Math.min(2, S.gust + 1.4); millTipOff = 60; tipEl2.classList.remove("on"); setTimeout(() => window.openChannel && window.openChannel(), 450); }
     return;
   }
   const ap = landNow !== "winter" && appleAt(x, y); if (ap) { dropApple(ap); e.preventDefault(); return; }
@@ -1435,7 +1435,7 @@ fx.addEventListener("pointerdown", e => {
   if (cr) { window.found && found(cr.kind === "plane" ? "plane" : cr.kind === "boat" ? "boat" : "sat"); grab = { ...cr, dx: cr.o.x - x, dy: cr.o.y - y, t: e.timeStamp, vx: 0 }; cr.o.held = true; fx.setPointerCapture(e.pointerId); fx.style.cursor = "grabbing"; e.preventDefault(); return; }
   if (nearBody(x, y)) { dragging = true; fx.setPointerCapture(e.pointerId); fx.style.cursor = "grabbing"; e.preventDefault(); return; }
   S.gust = Math.min(2, S.gust + (nearMill(x, y) ? 1.4 : .6));
-  if (nearMill(x, y)) { window.found && found("mill"); millTipOff = 60; tipEl2.classList.remove("on"); setTimeout(() => window.openConfig && window.openConfig(), 450); }
+  if (nearMill(x, y)) { window.found && found("mill"); millTipOff = 60; tipEl2.classList.remove("on"); setTimeout(() => window.openChannel && window.openChannel(), 450); }
   scare = { x, y, k: 1 };
   const zi = zodiacAt(x, y);
   if (zi >= 0) { setZHover(zi === zHover && e.pointerType !== "mouse" ? -1 : zi); return; }
@@ -1711,7 +1711,7 @@ function lightCards() {
 }
 // the code field: a dithered patch of the card's glyph, densest toward the lower right
 const DPR2 = Math.min(devicePixelRatio || 1, 1.5), CELL = 15;
-// some cards draw small filled icons (from images/marks) instead of a character: Paytm coins, Footer box, Vudio clapper
+// cards can draw small filled icons instead of a character; this portfolio uses characters only
 const MARK_SRC = {}; // every card draws its glyph as text
 const SPR = {};
 function tintMark(img, rgb) { const cv = document.createElement("canvas"); cv.width = cv.height = 128; const x = cv.getContext("2d");
@@ -1728,7 +1728,7 @@ function buildCells(k) {
   for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
     const x = i * CELL + CELL / 2, y = j * CELL + CELL / 2, d = Math.hypot((x - fx0) / R, (y - fy0) / (R * .8));
     const m = clamp(1.05 - d, 0, 1), hsh = Math.abs(Math.sin(i * 12.9898 + j * 78.233) * 43758.5453) % 1;
-    if (m <= 0 || hsh > m * (k.glyph === "v" ? .45 : 1.15)) continue; // Vudio: fewer marks
+    if (m <= 0 || hsh > m * (k.glyph === "v" ? .45 : 1.15)) continue; // "v" cards: fewer marks
     cells.push([x, y, m, hsh]);
   }
   k.cells = cells; k.rest = false;

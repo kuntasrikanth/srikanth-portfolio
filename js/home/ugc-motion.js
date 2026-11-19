@@ -82,7 +82,12 @@
   const S0 = 0, S1 = 3.8, ST = 6.2, SD = 2.4, SG = ST + SD * 10, SS = SG + 4, SE = SS + 2.6;
 
   function build(base) {
-    const img = n => `<img src="${base}${n}.jpg" alt="">`;
+    const FILES = { character: ["ai-ad-character", "AI ad still: our cartoon character in a desert tent"],
+      problem: ["ai-ad-tangled-cables", "AI ad still: the character untangling charging cables"],
+      worried: ["ai-ad-worried-character", "AI ad still: the character looking worried"],
+      product: ["ai-ad-3-in-1-charger", "AI ad still: the 3-in-1 magnetic wireless charger"],
+      listing: ["ai-ad-shopify-listing", "AI ad still: the charger's real listing on crazyclearance.uk"] };
+    const img = n => `<img src="${base}${FILES[n][0]}.webp" alt="${FILES[n][1]}" width="540" height="960" loading="lazy" decoding="async">`;
     const step = (i, ill) => `<div class="mg-sc st" data-s="${i}"><div class="num">${String(i + 1).padStart(2, "0")}</div><div class="of">STEP ${i + 1} OF 10</div><div class="hd ttl">${STEPS[i][0]}</div><div class="sub">${STEPS[i][1]}</div><div class="ill">${ill}</div></div>`;
     return `<div class="mg-stage"><div class="mg-bg"></div><div class="mg-grain"></div>
 <div class="mg-top"><b>CRAZY CLEARANCE</b><span>AI video · workflow</span></div>
@@ -216,7 +221,12 @@ ${step(9, `<div class="mg-card" style="left:40px;right:40px;top:40px;padding:50p
   // on the page: every [data-ugc-motion] box gets its own copy; proof videos play while on screen
   const boot = () => {
     const mounted = new Map();
-    document.querySelectorAll("#grid [data-ugc-motion], .room [data-ugc-motion]").forEach(el => mounted.set(el, mount(el)));
+    // each copy is built (and its stills fetched) only when it comes near the screen; the pop-up's copy when it opens
+    const boxes = [...document.querySelectorAll("#grid [data-ugc-motion], .room [data-ugc-motion]")];
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !mounted.has(e.target)) { mounted.set(e.target, mount(e.target)); io.unobserve(e.target); } }), { rootMargin: "400px 0px" });
+      boxes.forEach(el => io.observe(el));
+    } else boxes.forEach(el => mounted.set(el, mount(el)));
     window.ugcMotion = mounted;
     const vids = [...document.querySelectorAll("#grid .ugc-proof video")];
     if (vids.length && !matchMedia("(prefers-reduced-motion: reduce)").matches) {

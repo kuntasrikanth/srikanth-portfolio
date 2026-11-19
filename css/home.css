@@ -258,7 +258,7 @@ h1 em{font-style:italic}
 .arrow:hover{background:var(--chip)}
 .arrow svg{width:16px;height:16px}
 .info{display:flex;flex-direction:column;gap:14px;padding:6px 4px;min-width:0}
-.info h3{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(28px,2.6vw,38px);line-height:1.05}
+.info .ttl{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(28px,2.6vw,38px);line-height:1.05}
 .info .desc{max-width:none}
 .facts{display:flex;flex-direction:column;margin-top:4px}
 .facts div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
@@ -313,21 +313,21 @@ h1 em{font-style:italic}
 .feat .card-body .more{margin-top:auto}
 .feat .vis{padding-top:40px;margin-top:0}
 /* The preview is the case study itself, cropped to its opening hero. */
-.feat .paytm-vis{padding:28px 24px 28px 0;align-items:center}
-.paytm-preview{position:relative;width:min(100%, 230px);aspect-ratio:300 / 614;filter:drop-shadow(0 22px 30px rgba(0,30,80,.22))}
-.paytm-preview iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;color-scheme:normal;pointer-events:none}
-.paytm-card-link{position:absolute;inset:0;z-index:3;border-radius:inherit}.paytm-card-link:focus-visible{outline:3px solid var(--accent);outline-offset:-5px}.paytm-card .card-body .more,.cs-card .card-body .more{position:relative;z-index:4}
+.feat .bento-vis{padding:28px 24px 28px 0;align-items:center}
+.bento-preview{position:relative;width:min(100%, 230px);aspect-ratio:300 / 614;filter:drop-shadow(0 22px 30px rgba(0,30,80,.22))}
+.bento-preview iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;color-scheme:normal;pointer-events:none}
+.card-link{position:absolute;inset:0;z-index:3;border-radius:inherit}.card-link:focus-visible{outline:3px solid var(--accent);outline-offset:-5px}.bento-card .card-body .more,.cs-card .card-body .more{position:relative;z-index:4}
 .cs-card .win{width:min(94%,560px);margin:0}.cs-card .win img{display:block;width:100%;height:auto}
-.shot .paytm-preview{width:min(48%, 230px)}
-.thumb .paytm-preview{width:230px;flex:none}
+.shot .bento-preview{width:min(48%, 230px)}
+.thumb .bento-preview{width:230px;flex:none}
 /* bento: mobile case studies as tall half-width cards; text on top, the phone rises out of the bottom edge */
 .feat.bento{display:flex;flex-direction:column;min-height:700px;overflow:hidden}
 .feat.bento .card-body{padding-bottom:0;max-width:none}
 .feat.bento .card-body .more{margin-top:10px;align-self:flex-start}
-.feat.bento .paytm-vis{margin-top:auto;padding:40px 0 0;height:500px;display:flex;justify-content:center;align-items:flex-start;overflow:hidden}
-.feat.bento .paytm-preview{width:min(62%,262px)}
-@media (max-width:700px){.feat .paytm-vis{padding:32px 20px 20px}}
-@media (max-width:700px){.feat.bento{min-height:0}.feat.bento .paytm-vis{height:380px;padding:32px 0 0}}
+.feat.bento .bento-vis{margin-top:auto;padding:40px 0 0;height:500px;display:flex;justify-content:center;align-items:flex-start;overflow:hidden}
+.feat.bento .bento-preview{width:min(62%,262px)}
+@media (max-width:700px){.feat .bento-vis{padding:32px 20px 20px}}
+@media (max-width:700px){.feat.bento{min-height:0}.feat.bento .bento-vis{height:380px;padding:32px 0 0}}
 
 /* iPhone: silver rim, black bezel, Dynamic Island, side buttons */
 .phone{--w:230px;position:relative;width:var(--w);aspect-ratio:9/19.5;margin-bottom:-40%;border-radius:calc(var(--w) * .17);padding:3px;flex:none;
@@ -419,8 +419,8 @@ h1 em{font-style:italic}
 .desk .it.lift:focus-visible{box-shadow:0 0 0 2px var(--accent,#3b82f6)}
 /* heading */
 .desk .hello{position:absolute;left:61cqw;top:3cqw;width:37cqw;color:var(--fg);z-index:6}
-.hello h2{margin:0;font-family:var(--display);font-weight:400;font-size:7.2cqw;line-height:.95;letter-spacing:-.02em}
-.hello h2 em{font-style:italic}
+.hello h3{margin:0;font-family:var(--display);font-weight:400;font-size:7.2cqw;line-height:.95;letter-spacing:-.02em}
+.hello h3 em{font-style:italic}
 .hello p{margin:1.6cqw 0 0;font-size:1.45cqw;line-height:1.55;color:var(--muted);max-width:34cqw}
 .hello .hint{display:inline-flex;align-items:center;gap:.6cqw;margin-top:1.6cqw;font-family:var(--mono);font-size:1cqw;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .hello .hint i{width:2.6cqw;height:1px;background:currentColor;display:inline-block}
@@ -512,7 +512,7 @@ h1 em{font-style:italic}
 @container (max-width:640px){
   .desk{aspect-ratio:100/208}
   .desk .hello{left:5cqw;top:2cqw;width:90cqw}
-  .hello h2{font-size:15cqw}.hello p{font-size:3.9cqw;max-width:none;margin-top:3cqw}.hello .hint{font-size:2.8cqw;margin-top:3cqw}.hello .hint i{width:6cqw}
+  .hello h3{font-size:15cqw}.hello p{font-size:3.9cqw;max-width:none;margin-top:3cqw}.hello .hint{font-size:2.8cqw;margin-top:3cqw}.hello .hint i{width:6cqw}
   .folder{left:3cqw;top:106cqw;width:94cqw;height:62cqw}
   .folder .front::after{font-size:3.6cqw;right:4cqw;bottom:3cqw}
   .paper{left:7cqw;top:88cqw;width:48cqw;height:68cqw;padding:4.4cqw 4cqw}
@@ -593,7 +593,7 @@ h1 em{font-style:italic}
 .room.on .cvsheet{transform:none}
 .cvsheet h3{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,52px);line-height:1}
 .cvsheet .rl{color:#6c655c;margin:6px 0 22px}
-.cvsheet h6{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a8275;border-top:1px solid #e0d9cc;padding-top:12px;margin:22px 0 8px}
+.cvsheet h4{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a8275;border-top:1px solid #e0d9cc;padding-top:12px;margin:22px 0 8px}
 .cvsheet .row{display:flex;justify-content:space-between;gap:16px}.cvsheet .row span{color:#8a8275;font-family:var(--mono);font-size:12px;white-space:nowrap}
 .cvsheet p{margin:4px 0 10px;line-height:1.55;color:#4a453f}
 .hello .cta{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 16px;border-radius:12px;background:#2a2622;color:#fbf8f1;text-decoration:none;font-size:14px}
@@ -783,7 +783,7 @@ h1 em{font-style:italic}
 .nav a.on{background:var(--fg);color:var(--bg)}
 .desk .it.pick{z-index:9}
 :where(.desk a.it){display:block;text-decoration:none}a.go{text-decoration:none}
-/* the Config polaroid: a taller photo, a two-line caption, a "featured" sticker */
+/* the channel polaroid: a taller photo, a two-line caption, a "featured" sticker */
 .desk .pola{left:1cqw;top:1.5cqw;width:13.5cqw;height:20.5cqw;padding:.85cqw .85cqw 4.4cqw;--r:-9deg}
 .pola .cap{position:absolute;left:1cqw;right:1cqw;bottom:1cqw;display:flex;align-items:center;justify-content:flex-start;gap:.75cqw;text-align:left}
 .pola .cap .fg{width:1.35cqw;height:2cqw}
@@ -836,29 +836,29 @@ h1 em{font-style:italic}
 .milltip i{font-style:normal;display:inline-block;margin-left:4px;animation:tap 1.2s ease-in-out infinite}
 @keyframes tap{50%{transform:translateY(-2px) rotate(-8deg)}}
 [data-sky="night"] .milltip{background:#1d2333;color:#eef0f4}[data-sky="night"] .milltip::after{background:#1d2333}
-/* the Config card */
-.cfgcard{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(20px,3vw,40px);align-items:center;width:min(880px,94vw);background:#fbf8f1;color:#2a2622;border-radius:20px;padding:clamp(18px,3vw,34px);
+/* the channel card */
+.chcard{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(20px,3vw,40px);align-items:center;width:min(880px,94vw);background:#fbf8f1;color:#2a2622;border-radius:20px;padding:clamp(18px,3vw,34px);
   box-shadow:0 2px 4px rgba(0,0,0,.12),0 30px 70px -20px rgba(0,0,0,.45);transform:scale(.96);opacity:0;transition:transform .5s var(--ease),opacity .35s}
-.room.on .cfgcard{transform:none;opacity:1}
-.cfgcard .ph{background:#fff;padding:12px 12px 52px;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.15),0 14px 30px -12px rgba(0,0,0,.3);transform:rotate(-3deg);position:relative}
-.cfgcard .ph img{display:block;width:100%;height:auto}
-/* the Config card: the windmill animation and the Config photos as two polaroids; tap the back one to bring it forward */
-.cfgcard .cfgart{position:relative;margin:0 9% 40px 0}
-.cfgcard .cfgart .ph{display:block;width:100%;border:0;font:inherit;color:inherit;text-align:center;cursor:pointer;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
-.cfgcard .cfgart .front{position:relative;z-index:1;transform:rotate(-3deg)}
-.cfgcard .cfgart .back{position:absolute;z-index:2;right:-16%;bottom:-14%;width:46%;transform:rotate(6deg);padding:6px 6px 26px}
-.cfgcard .cfgart .back:hover{transform:rotate(3deg) translateY(-6px)}
-.cfgcard .cfgart .back span{bottom:6px;font-size:12px}
+.room.on .chcard{transform:none;opacity:1}
+.chcard .ph{background:#fff;padding:12px 12px 52px;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.15),0 14px 30px -12px rgba(0,0,0,.3);transform:rotate(-3deg);position:relative}
+.chcard .ph img{display:block;width:100%;height:auto}
+/* the channel card: channel art and channel numbers as two polaroids; tap the back one to bring it forward */
+.chcard .chpics{position:relative;margin:0 9% 40px 0}
+.chcard .chpics .ph{display:block;width:100%;border:0;font:inherit;color:inherit;text-align:center;cursor:pointer;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.chcard .chpics .front{position:relative;z-index:1;transform:rotate(-3deg)}
+.chcard .chpics .back{position:absolute;z-index:2;right:-16%;bottom:-14%;width:46%;transform:rotate(6deg);padding:6px 6px 26px}
+.chcard .chpics .back:hover{transform:rotate(3deg) translateY(-6px)}
+.chcard .chpics .back span{bottom:6px;font-size:12px}
 /* both polaroids share one frame (4:5 photo, same padding), so swapping them never changes the card's height */
-.cfgcard .cfgart video,.cfgcard .cfgart img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#cfe6f5}
-.cfgcard .ph span{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-family:var(--display);font-style:italic;font-size:18px;color:#5b5348}
-.cfgcard .fgl{width:28px;height:42px}
-.cfgcard .k{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8a8275;margin:18px 0 6px}
-.cfgcard h3{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(40px,5.5vw,64px);line-height:.95;letter-spacing:-.02em}
-.cfgcard p{color:#4a453f;line-height:1.6;margin:16px 0 22px;max-width:34em}
-.cfgcard .go{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;background:#1e1e1e;color:#fff;border:0;font:500 15px var(--sans);cursor:pointer}
-.cfgcard .go:hover{background:#000}
-@media (max-width:700px){.cfgcard{grid-template-columns:1fr;max-height:calc(100vh - 100px);overflow:auto}.cfgcard .ph{width:62%;margin:0 auto}.cfgcard .cfgart{width:66%;margin:0 auto 40px}.cfgcard .cfgart .front{width:100%}.cfgcard .cfgart .back{width:46%;margin:0}}
+.chcard .chpics video,.chcard .chpics img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#cfe6f5}
+.chcard .ph span{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-family:var(--display);font-style:italic;font-size:18px;color:#5b5348}
+.chcard .fgl{width:28px;height:42px}
+.chcard .k{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8a8275;margin:18px 0 6px}
+.chcard h3{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(40px,5.5vw,64px);line-height:.95;letter-spacing:-.02em}
+.chcard p{color:#4a453f;line-height:1.6;margin:16px 0 22px;max-width:34em}
+.chcard .go{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;background:#1e1e1e;color:#fff;border:0;font:500 15px var(--sans);cursor:pointer}
+.chcard .go:hover{background:#000}
+@media (max-width:700px){.chcard{grid-template-columns:1fr;max-height:calc(100vh - 100px);overflow:auto}.chcard .ph{width:62%;margin:0 auto}.chcard .chpics{width:66%;margin:0 auto 40px}.chcard .chpics .front{width:100%}.chcard .chpics .back{width:46%;margin:0}}
 /* tape belongs to the card it holds down: it lifts with it instead of the card sliding through it */
 .desk .cv{overflow:visible}
 .desk .it .tape{position:absolute;z-index:7;pointer-events:none}
@@ -996,10 +996,10 @@ h1 em{font-style:italic}
 .dockveil{height:calc(env(safe-area-inset-bottom,0px) + 170px);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .foot{padding-bottom:140px}
 .pop{bottom:calc(env(safe-area-inset-bottom,0px) + 92px)}
-/* the Config card at night: the same dark glass as the close button, not a white sheet (the photos keep their white frames) */
-[data-sky="night"] .cfgcard{background:var(--glass);color:var(--fg);box-shadow:inset 0 0 0 1px var(--glass-bd),var(--glass-sh);-webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%)}
-[data-sky="night"] .cfgcard p,[data-sky="night"] .cfgcard .k{color:var(--muted)}
-[data-sky="night"] .cfgcard .go{background:var(--fg);color:var(--bg)}[data-sky="night"] .cfgcard .go:hover{background:#fff}
+/* the channel card at night: the same dark glass as the close button, not a white sheet (the photos keep their white frames) */
+[data-sky="night"] .chcard{background:var(--glass);color:var(--fg);box-shadow:inset 0 0 0 1px var(--glass-bd),var(--glass-sh);-webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%)}
+[data-sky="night"] .chcard p,[data-sky="night"] .chcard .k{color:var(--muted)}
+[data-sky="night"] .chcard .go{background:var(--fg);color:var(--bg)}[data-sky="night"] .chcard .go:hover{background:#fff}
 /* easter eggs: an egg button, top right, that cracks a little with every find and hatches when all are found.
    Tap it to open the list: unfound items are scrambled until tapped (or until the bulb reveals them all) */
 .finds{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);right:max(14px,env(safe-area-inset-right,0px));z-index:50;color:var(--pill-fg);font:500 13px/1.25 var(--sans);
@@ -1081,18 +1081,18 @@ h1 em{font-style:italic}
   .dockveil{height:calc(env(safe-area-inset-bottom,0px) + 230px)}.foot{padding-bottom:190px}.pop{bottom:calc(env(safe-area-inset-bottom,0px) + 150px)}}
 @media (max-width:640px){.navwrap .glass{height:46px;border-radius:14px}.navwrap .mark{padding:0 4px}.mark a{width:34px;height:34px}.navwrap .catsnav .cats button{padding:7px 11px;font-size:14px}.navbox{gap:8px}}
 
-/* ---------- phones only: fewer toys, the Config card as a bottom sheet ---------- */
+/* ---------- phones only: fewer toys, the channel card as a bottom sheet ---------- */
 @media (max-width:640px){
   .finds{display:none!important}
   .prism{cursor:default}
-  #cfgRoom{place-items:end stretch;padding:0}
-  #cfgRoom{background:rgba(10,10,14,.45)!important}
-  #cfgRoom .x{display:none}
-  #cfgRoom .cfgcard>div:last-child{display:contents}
-  #cfgRoom .cfgcard{width:100%;max-height:min(86vh,760px);overflow:auto;overscroll-behavior:contain;grid-template-columns:1fr;gap:0;border-radius:24px 24px 0 0;padding:28px 20px 0;transform:translateY(100%);opacity:1;transition:transform .45s var(--ease)}
-  #cfgRoom.on .cfgcard{transform:none}
-  #cfgRoom .cfgcard::before{content:"";position:sticky;top:-18px;display:block;width:40px;height:4px;margin:-14px auto 18px;border-radius:3px;background:rgba(127,127,127,.4);z-index:2}
-  #cfgRoom .cfgcard .go{position:sticky;bottom:0;z-index:2;width:calc(100% + 40px);margin:0 -20px;justify-content:center;border-radius:0;padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));font-size:16px;box-shadow:0 -10px 24px -14px rgba(0,0,0,.35)}
+  #chRoom{place-items:end stretch;padding:0}
+  #chRoom{background:rgba(10,10,14,.45)!important}
+  #chRoom .x{display:none}
+  #chRoom .chcard>div:last-child{display:contents}
+  #chRoom .chcard{width:100%;max-height:min(86vh,760px);overflow:auto;overscroll-behavior:contain;grid-template-columns:1fr;gap:0;border-radius:24px 24px 0 0;padding:28px 20px 0;transform:translateY(100%);opacity:1;transition:transform .45s var(--ease)}
+  #chRoom.on .chcard{transform:none}
+  #chRoom .chcard::before{content:"";position:sticky;top:-18px;display:block;width:40px;height:4px;margin:-14px auto 18px;border-radius:3px;background:rgba(127,127,127,.4);z-index:2}
+  #chRoom .chcard .go{position:sticky;bottom:0;z-index:2;width:calc(100% + 40px);margin:0 -20px;justify-content:center;border-radius:0;padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));font-size:16px;box-shadow:0 -10px 24px -14px rgba(0,0,0,.35)}
 }
 /* phones: the category tabs scroll sideways; fade the edge that has more and show an arrow */
 .cats-more{display:none}

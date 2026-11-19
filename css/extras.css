@@ -5,3 +5,17 @@
 .hero-facts li{display:flex;align-items:baseline;gap:7px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--chip);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .hero-facts b{font:600 15px/1 var(--sans);color:var(--fg);letter-spacing:-.01em}
 @media(max-width:640px){.hero-role{font-size:10.5px;letter-spacing:.08em}.hero-facts li{padding:6px 11px;font-size:12px}.hero-facts b{font-size:14px}}
+
+/* hero: one tap to email, the CV or LinkedIn */
+.hero-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:10px}
+.hbtn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--line);background:var(--chip);color:var(--fg);font:600 15px/1 var(--sans);text-decoration:none;transition:transform .2s var(--ease)}
+.hbtn:hover{transform:translateY(-1px)}
+.hbtn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.hbtn:focus-visible,.hello a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+/* desk: the email address in plain sight, next to the CV */
+.hello p a{color:var(--fg);text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+.hello .cta+.cta{margin-left:8px}
+.hello .cta.alt{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1px var(--line)}
+/* case studies end on what happened */
+.card .result{margin:12px 0 0;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--chip);font-size:14px;line-height:1.5;color:var(--fg)}
+.card .result b{display:inline-block;margin-right:6px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}

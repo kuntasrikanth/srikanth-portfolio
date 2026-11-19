@@ -49,15 +49,15 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
     c.font = `italic ${W * .12}px "Instrument Serif", Georgia, serif`; c.fillText("1.2M+ views", W / 2, H * .76);
     c.globalAlpha = .8; c.font = `${W * .05}px "Geist", system-ui, sans-serif`; c.fillText("grown organically · no budget", W / 2, H * .86);
   };
-  const paintCfg = () => { document.getElementById("cfgVid").src = art(480, 600, drawSpace); document.getElementById("cfgPic").src = art(480, 600, drawStats); };
-  paintCfg(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintCfg);
+  const paintCh = () => { document.getElementById("chFront").src = art(480, 600, drawSpace); document.getElementById("chBack").src = art(480, 600, drawStats); };
+  paintCh(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintCh);
 
   // rooms: open, close, blur behind
   let lastFocus = null;
   const openRoom = r => { navRoom = r.id === "cvRoom" ? "resume" : r.id === "bookRoom" ? "about" : null; navSpy(); lastFocus = document.activeElement; r.hidden = false; requestAnimationFrame(() => r.classList.add("on")); document.documentElement.style.overflow = "hidden"; r.querySelector(".x").focus(); };
   const closeRoom = r => { r.querySelectorAll("video").forEach(v => v.pause()); navRoom = null; navSpy(); r.classList.remove("on"); document.documentElement.style.overflow = ""; setTimeout(() => { r.hidden = true; }, 350); lastFocus && lastFocus.focus(); };
   document.querySelectorAll(".room").forEach(r => {
-    r.addEventListener("click", e => { if (e.target.closest("[data-close]") || !e.target.closest(".leaf, .ctl, .cvsheet, .cfgcard, .letter")) closeRoom(r); });
+    r.addEventListener("click", e => { if (e.target.closest("[data-close]") || !e.target.closest(".leaf, .ctl, .cvsheet, .chcard, .letter")) closeRoom(r); });
   });
   addEventListener("keydown", e => {
     const r = document.querySelector(".room.on"); if (!r) return;
@@ -100,7 +100,7 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
     // closing: you and me, exchanging a hello
     hello: fig(60, "0 0 300 110", `<path d="M40 25H270M40 85H270"/><path class="ph" d="M150 25q-8 5 0 10t0 10t0 10t0 10t0 10t0 10"/><circle cx="150" cy="25" r="2.6"/><circle cx="150" cy="85" r="2.6"/><text x="6" y="30">me</text><text x="6" y="90">you</text><text x="164" y="60">hello</text>`)
   };
-  const T = "From Fifty Rupees<br>a Day", SUB = "₹50 is about 43p · Villages, WhatsApp groups, space videos and a clearance store";
+  const T = "From Medak<br>to the Midlands", SUB = "Villages, WhatsApp groups, space videos and a clearance store";
   // every face is a page; the last leaf carries the closing page with the back cover behind it
   const FACES = [
     { c: "cover", h: `<div class="frame">${crest}<div class="ct">${T}</div><div class="cs">${SUB}</div><div class="cr"></div><div class="ca">SRIKANTH</div><div class="cd">Social Media &amp; eCommerce Marketing Executive · MMXXVI</div></div>` },
@@ -111,7 +111,7 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
     { h: `${hd("Chapter 3", "My first business")}${ch(3, "My first business")}<p>In August 2022 I started a B.Com in Computer Applications. I helped friends with scholarship applications, then made a WhatsApp group for students, and began posting job notifications too.</p><p>In three months it grew from 15 people to around 500. I worked 5pm to 1am and 6am to 8am, on a hard chair with a pillow, my laptop on the bed.</p>${SK.group}` },
     { h: `${hd("Chapter 4", "Taking a chance")}${ch(4, "Taking a chance")}<p>I messaged Shivani Pallela, a well-known YouTube teacher for B.Com, BBA and BA students, and she promoted my service for free. Centres charged 100 to 150 rupees (87p to £1.30) and students travelled 10 to 15 km. I charged 80 (70p), and nobody travelled.</p><p>Through her Telegram page I earned 400 to 600 rupees a day (£3.50 to £5.20), and bought my family a fridge for 17,000 rupees (about £148).</p>${sc("₹80 (70p), no travel &nbsp;&gt;&nbsp; ₹150 (£1.30) + 15 km")}` },
     { h: `${hd("Chapter 5", "One simple idea")}${ch(5, "One simple idea")}<p>On results day the website kept crashing, and village internet is slow. I asked Shivani to pin my comment offering to check results for free.</p><p>In one hour I got 100 to 150 messages and checked results for more than 80 students. The group grew from 500 to 700. One simple, useful idea can change things.</p>${sc("roll number + date of birth → result")}` },
-    { h: `${hd("Chapter 6", "Copy The Facts")}${ch(6, "Copy The Facts")}<p>In 2023 I started Copy The Facts Telugu, a channel about space, technology and the universe. I wrote scripts on my laptop and recorded voiceovers on my phone.</p><p>My first videos weren't good, and even my family didn't believe in it. I taught myself CapCut and kept going. It grew to more than 4,400 subscribers and 1.2 million views.</p>${SK.channel}` },
+    { h: `${hd("Chapter 6", "Copy The Facts Telugu")}${ch(6, "Copy The Facts Telugu")}<p>In 2023 I started Copy The Facts Telugu, a channel about space, technology and the universe. I wrote scripts on my laptop and recorded voiceovers on my phone.</p><p>My first videos weren't good, and even my family didn't believe in it. I taught myself CapCut and kept going. It grew to more than 4,400 subscribers and 1.2 million views.</p>${SK.channel}` },
     { h: `${hd("Chapter 7", "Teaching, then the UK")}${ch(7, "Teaching, then the UK")}<p>In 2024 I joined Digital Equity, a non-profit, as a Facilitator Intern, and spent a year teaching 9th class students to use the internet and stay safe online.</p><p>In September 2025 I came to the UK for an MSc in Business Analytics at The University of Law, Birmingham. In November I started sorting products part-time at DX Freight in Willenhall.</p>${sc("ŷ = β₀ + β₁x + ε")}` },
     { h: `${hd("Chapter 8", "A friend called Abid")}${ch(8, "A friend called Abid")}<p>I came alone, and my English wasn't strong, but I made myself talk to people. That's how I met Abid, a colleague from Afghanistan, who helped me with my English and taught me about life here.</p><p>When he got a job at DropThePriceUK Limited, which trades as Crazy Clearance, he referred me. On 18 May 2026 I joined in customer service.</p>${SK.abid}` },
     { h: `${hd("Chapter 9", "Ideas nobody asked for")}${ch(9, "Ideas nobody asked for")}<p>Our channel had 132,000 followers and 85 million reel views, but almost no sales came from it. Nobody asked me to, but I audited the website: product names in capitals, no Google description, no reviews, no blog. I proposed an AI agent for unanswered comments, and made an in-store announcement with Fish Audio.</p><p>The owner turned it down. I didn't give up.</p>${sc("audit · agent · announcement")}` },
@@ -182,13 +182,13 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
     toast("Opening your mail app"); closeRoom(mailRoom);
   });
   // the channel card: the windmill and the desk polaroid both open it
-  let cfgUrl = CONTACT.youtube;
-  const cfgArt = document.getElementById("cfgArt"), STILL = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const openCfg = (url = CONTACT.youtube) => { cfgUrl = url; document.getElementById("cfgGo").href = url; openRoom(document.getElementById("cfgRoom")); };
+  let chUrl = CONTACT.youtube;
+  const chPics = document.getElementById("chPics"), STILL = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const openCh = (url = CONTACT.youtube) => { chUrl = url; document.getElementById("chGo").href = url; openRoom(document.getElementById("chRoom")); };
   // tap either polaroid to swap them, with a fluid move: each one glides, scales and turns from its old place to its new one (FLIP)
-  cfgArt.addEventListener("click", e => {
+  chPics.addEventListener("click", e => {
     if (!e.target.closest(".ph")) return;
-    const cards = [...cfgArt.children], box = c => ({ x: c.offsetLeft + c.offsetWidth / 2, y: c.offsetTop + c.offsetHeight / 2, w: c.offsetWidth }), rot = c => c.classList.contains("front") ? -3 : 6;
+    const cards = [...chPics.children], box = c => ({ x: c.offsetLeft + c.offsetWidth / 2, y: c.offsetTop + c.offsetHeight / 2, w: c.offsetWidth }), rot = c => c.classList.contains("front") ? -3 : 6;
     const first = cards.map(c => ({ ...box(c), r: rot(c) }));
     if (!STILL) cards.forEach(c => c.style.transition = "none"); // a CSS transition would override the move below
     cards.forEach(c => { c.classList.toggle("front"); c.classList.toggle("back"); });
@@ -202,12 +202,12 @@ const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.co
       ], { duration: 720, easing: "cubic-bezier(.22,.8,.24,1)" }).onfinish = () => { c.style.transition = ""; };
     });
   });
-  window.openConfig = openCfg;
+  window.openChannel = openCh;
   // the AI ads room: the workflow motion graphic beside the finished ad, restarted from the top each time
   const ugcRoom = document.getElementById("ugcRoom");
   const openUgc = () => { openRoom(ugcRoom); const el = ugcRoom.querySelector("[data-ugc-motion]"), m = window.ugcMotion && window.ugcMotion.get(el); if (m) m.restart(); };
   document.querySelectorAll('[data-open="ugc"]').forEach(a => a.addEventListener("click", e => { e.preventDefault(); openUgc(); }));
-  document.getElementById("openCfg").addEventListener("click", () => openCfg(CONTACT.youtube));
+  document.getElementById("openCh").addEventListener("click", () => openCh(CONTACT.youtube));
   document.getElementById("openAbout").addEventListener("click", openBook);
   // the nav's About and Resume open the same papers
   // go to the desk first, so people see where the thesis and the CV live, then open them

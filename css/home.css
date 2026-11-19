@@ -312,22 +312,16 @@ h1 em{font-style:italic}
 .feat .card-body{padding-bottom:36px}
 .feat .card-body .more{margin-top:auto}
 .feat .vis{padding-top:40px;margin-top:0}
-/* The preview is the case study itself, cropped to its opening hero. */
-.feat .paytm-vis{padding:28px 24px 28px 0;align-items:center}
-.paytm-preview{position:relative;width:min(100%, 230px);aspect-ratio:300 / 614;filter:drop-shadow(0 22px 30px rgba(0,30,80,.22))}
-.paytm-preview iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;color-scheme:normal;pointer-events:none}
-.paytm-card-link{position:absolute;inset:0;z-index:3;border-radius:inherit}.paytm-card-link:focus-visible{outline:3px solid var(--accent);outline-offset:-5px}.paytm-card .card-body .more,.cs-card .card-body .more{position:relative;z-index:4}
+.feat .bento-vis{padding:28px 24px 28px 0;align-items:center}
+.card-link{position:absolute;inset:0;z-index:3;border-radius:inherit}.card-link:focus-visible{outline:3px solid var(--accent);outline-offset:-5px}.cs-card .card-body .more{position:relative;z-index:4}
 .cs-card .win{width:min(94%,560px);margin:0}.cs-card .win img{display:block;width:100%;height:auto}
-.shot .paytm-preview{width:min(48%, 230px)}
-.thumb .paytm-preview{width:230px;flex:none}
 /* bento: mobile case studies as tall half-width cards; text on top, the phone rises out of the bottom edge */
 .feat.bento{display:flex;flex-direction:column;min-height:700px;overflow:hidden}
 .feat.bento .card-body{padding-bottom:0;max-width:none}
 .feat.bento .card-body .more{margin-top:10px;align-self:flex-start}
-.feat.bento .paytm-vis{margin-top:auto;padding:40px 0 0;height:500px;display:flex;justify-content:center;align-items:flex-start;overflow:hidden}
-.feat.bento .paytm-preview{width:min(62%,262px)}
-@media (max-width:700px){.feat .paytm-vis{padding:32px 20px 20px}}
-@media (max-width:700px){.feat.bento{min-height:0}.feat.bento .paytm-vis{height:380px;padding:32px 0 0}}
+.feat.bento .bento-vis{margin-top:auto;padding:40px 0 0;height:500px;display:flex;justify-content:center;align-items:flex-start;overflow:hidden}
+@media (max-width:700px){.feat .bento-vis{padding:32px 20px 20px}}
+@media (max-width:700px){.feat.bento{min-height:0}.feat.bento .bento-vis{height:380px;padding:32px 0 0}}
 
 /* iPhone: silver rim, black bezel, Dynamic Island, side buttons */
 .phone{--w:230px;position:relative;width:var(--w);aspect-ratio:9/19.5;margin-bottom:-40%;border-radius:calc(var(--w) * .17);padding:3px;flex:none;
@@ -565,7 +559,7 @@ h1 em{font-style:italic}
 .face.cover{background-image:linear-gradient(90deg,rgba(0,0,0,.25),transparent 6%),radial-gradient(120% 80% at 70% 0%,rgba(255,255,255,.08),transparent 60%)}
 .face.cover.back{background-image:linear-gradient(270deg,rgba(0,0,0,.25),transparent 6%)}
 .face .run{display:flex;justify-content:space-between;border-bottom:1px solid #e0d9cc;padding-bottom:.6em;margin-bottom:1.6em}
-.face h5{line-height:1.05;margin:0 0 .7em;letter-spacing:-.01em}
+.face h3{line-height:1.05;margin:0 0 .7em;letter-spacing:-.01em}
 .face p{margin:0 0 .9em;text-wrap:pretty}
 .face .drop::first-letter{float:left;font-size:3.4em;line-height:.85;padding:.06em .1em 0 0}
 .face .no{position:absolute;bottom:calc(var(--pw) * .045);left:0;right:0;text-align:center}
@@ -591,12 +585,15 @@ h1 em{font-style:italic}
 /* the CV sheet */
 .cvsheet{width:min(720px,94vw);max-height:calc(100vh - 120px);overflow:auto;background:#fbf8f1;color:#2a2622;border-radius:4px;padding:clamp(24px,5vw,56px);box-shadow:0 30px 80px rgba(0,0,0,.3);transform:translateY(24px) scale(.97);transition:transform .5s var(--ease)}
 .room.on .cvsheet{transform:none}
-.cvsheet h3{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,52px);line-height:1}
+.cvsheet h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,52px);line-height:1}
 .cvsheet .rl{color:#6c655c;margin:6px 0 22px}
-.cvsheet h6{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a8275;border-top:1px solid #e0d9cc;padding-top:12px;margin:22px 0 8px}
+.cvsheet h3{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a8275;border-top:1px solid #e0d9cc;padding-top:12px;margin:22px 0 8px}
 .cvsheet .row{display:flex;justify-content:space-between;gap:16px}.cvsheet .row span{color:#8a8275;font-family:var(--mono);font-size:12px;white-space:nowrap}
 .cvsheet p{margin:4px 0 10px;line-height:1.55;color:#4a453f}
 .hello .cta{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 16px;border-radius:12px;background:#2a2622;color:#fbf8f1;text-decoration:none;font-size:14px}
+.hello .ctas-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.hello .ctas-row .cta{margin-top:0}
+.hello .cta.alt{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px currentColor}
+.hello p a.mail{color:var(--fg);text-decoration:underline;text-underline-offset:.18em;text-decoration-thickness:1px;overflow-wrap:anywhere}
 .cvsheet .dl{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:10px 16px;border-radius:12px;background:#2a2622;color:#fbf8f1;text-decoration:none;font-size:14px}
 .cvsheet .todo{font-family:var(--mono);font-size:11px;color:#c2412d}
 /* the letter: the envelope opens into a sheet you write on, then it goes out by mail */
@@ -644,8 +641,8 @@ h1 em{font-style:italic}
 .room .book{--th:"STIX Two Text","Iowan Old Style",Georgia,serif}
 .face{font-family:var(--th)}
 .face .run{font-family:var(--th);font-style:italic;font-size:.8em;letter-spacing:0;text-transform:none;color:#6c655c}
-.face h5{font-family:var(--th);font-weight:600;font-size:1.9em}
-.face h5.sm{text-align:center;font-size:1.35em;margin:.6em 0 1.2em;letter-spacing:.02em}
+.face h3{font-family:var(--th);font-weight:600;font-size:1.9em}
+.face h3.sm{text-align:center;font-size:1.35em;margin:.6em 0 1.2em;letter-spacing:.02em}
 .face h6{font-family:var(--th);font-weight:600;font-size:1.05em;letter-spacing:0;text-transform:none;color:#2a2622;margin:.2em 0 .7em}
 .face p{text-align:justify;hyphens:auto}
 .face .no{font-family:var(--th);font-size:.85em;color:#6c655c}
@@ -653,7 +650,7 @@ h1 em{font-style:italic}
 .face .chap{display:flex;justify-content:space-between;align-items:flex-end;margin-top:1.4em}
 .face .chap span{font-variant:small-caps;letter-spacing:.08em;font-size:1.1em;color:#6c655c}
 .face .chap b{font-size:4.2em;line-height:.8;font-weight:400;color:#7a1f22}
-.face .chap+h5{margin:.25em 0 .3em}
+.face .chap+h3{margin:.25em 0 .3em}
 .face .crule{height:2px;background:#2a2622;margin:0 0 1.2em;box-shadow:0 3px 0 -1px #fbf8f1,0 4px 0 -1px #2a2622}
 .face .defn,.face .thm{margin:.9em 0;padding:.7em .9em;border-left:2px solid #7a1f22;background:rgba(122,31,34,.04)}
 .face .defn ol{margin:.3em 0 0}
@@ -690,7 +687,7 @@ h1 em{font-style:italic}
 .room .face.a:not(.cover):not(.endp){background:linear-gradient(90deg,rgba(60,30,0,.16),transparent 7%),var(--stains),#ecdfc2;color:var(--ink)}
 .room .face.b:not(.cover):not(.endp){background:linear-gradient(270deg,rgba(60,30,0,.16),transparent 7%),var(--stains),#ecdfc2;color:var(--ink)}
 .room .face p{font-family:var(--hand);font-size:1.32em;line-height:1.45;text-align:left;hyphens:manual}
-.room .face h5{font-family:var(--hand);font-weight:400;font-size:2.2em;color:var(--ink)}
+.room .face h3{font-family:var(--hand);font-weight:400;font-size:2.2em;color:var(--ink)}
 .room .face .run,.room .face .chap span,.room .face .colo{font-family:var(--fell);color:var(--ink2)}
 .room .face .chap b{font-family:var(--hand);color:var(--ink);font-size:3.6em}
 .room .face .crule{height:1px;background:var(--ink);box-shadow:none;opacity:.7;transform:rotate(-.6deg)}
@@ -854,7 +851,7 @@ h1 em{font-style:italic}
 .cfgcard .ph span{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-family:var(--display);font-style:italic;font-size:18px;color:#5b5348}
 .cfgcard .fgl{width:28px;height:42px}
 .cfgcard .k{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8a8275;margin:18px 0 6px}
-.cfgcard h3{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(40px,5.5vw,64px);line-height:.95;letter-spacing:-.02em}
+.cfgcard h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(40px,5.5vw,64px);line-height:.95;letter-spacing:-.02em}
 .cfgcard p{color:#4a453f;line-height:1.6;margin:16px 0 22px;max-width:34em}
 .cfgcard .go{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;background:#1e1e1e;color:#fff;border:0;font:500 15px var(--sans);cursor:pointer}
 .cfgcard .go:hover{background:#000}

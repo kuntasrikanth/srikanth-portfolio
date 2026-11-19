@@ -82,7 +82,14 @@
   const S0 = 0, S1 = 3.8, ST = 6.2, SD = 2.4, SG = ST + SD * 10, SS = SG + 4, SE = SS + 2.6;
 
   function build(base) {
-    const img = n => `<img src="${base}${n}.jpg" alt="">`;
+    const ALT = {
+      character: "Our AI ad character, a man in a turban, sitting on a bed in a desert tent",
+      worried: "Clip 1 close-up: the AI character looks worried about his charging cables",
+      problem: "Clip 1, the problem: the AI character holding a tangle of charging cables",
+      product: "Clip 2, the fix: the 3-in-1 magnetic wireless charger charging a phone and a watch",
+      listing: "The Crazy Clearance product listing for the 3-in-1 magnetic wireless charger"
+    };
+    const img = n => `<img src="${base}${n}.webp" alt="${ALT[n] || ""}" width="540" height="960" loading="lazy" decoding="async">`;
     const step = (i, ill) => `<div class="mg-sc st" data-s="${i}"><div class="num">${String(i + 1).padStart(2, "0")}</div><div class="of">STEP ${i + 1} OF 10</div><div class="hd ttl">${STEPS[i][0]}</div><div class="sub">${STEPS[i][1]}</div><div class="ill">${ill}</div></div>`;
     return `<div class="mg-stage"><div class="mg-bg"></div><div class="mg-grain"></div>
 <div class="mg-top"><b>CRAZY CLEARANCE</b><span>AI video · workflow</span></div>

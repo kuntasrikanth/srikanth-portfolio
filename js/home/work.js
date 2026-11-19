@@ -1,3 +1,12 @@
+/* video posters load only when the video comes near the screen, so they don't hold up the first load */
+(() => {
+  const vids = [...document.querySelectorAll("video[data-poster]")];
+  const set = v => { if (v.dataset.poster) { v.poster = v.dataset.poster; delete v.dataset.poster; } };
+  if (!("IntersectionObserver" in window)) { vids.forEach(set); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { set(e.target); io.unobserve(e.target); } }), { rootMargin: "600px 0px" });
+  vids.forEach(v => io.observe(v));
+})();
+
 /* motion reels play while on screen and pause when they scroll away; reduced motion shows the poster with controls */
 (() => {
   const vids = [...document.querySelectorAll("#grid .reelbox video")]; if (!vids.length) return;

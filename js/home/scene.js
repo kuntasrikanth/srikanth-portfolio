@@ -13,7 +13,7 @@ const TAU = Math.PI * 2;
 const HZ = .618; // horizon, as a fraction of the scene height from the top
 
 /* ---------- the work box ---------- */
-const CATS = [["best", "Featured"], ["social", "Social & video"], ["ai", "AI"], ["data", "Data & analytics"]];
+const CATS = [["best", "Case studies"], ["video", "Video"]];
 const CATLABEL = Object.fromEntries(CATS);
 const tabs = $("#tabs"), works = $("#works"), ALLCARDS = [...document.querySelectorAll("#grid .card")], SPANS = new Map(ALLCARDS.map(c => [c, [...c.classList].find(k => /^s\d+$/.test(k))]));
 let curCat = "best", curList = ALLCARDS, curIdx = 0;
@@ -1654,7 +1654,19 @@ function lightLoop(now) {
 requestAnimationFrame(lightLoop);
 
 /* ================= Cards: edges lit by the light, a holographic code field on hover ================= */
-const CARDS = [...document.querySelectorAll("#grid .card, #shot")].map(el => ({ el, cv: el.querySelector(".holo"), rim: el.querySelector(".rim"), rw: 0, rh: 0, lit: 0, glyph: el.dataset.glyph, hov: 0, hovT: 0, mx: .5, my: .5, rect: null, cells: null, w: 0, h: 0, rest: false }));
+const CARDS = [...document.querySelectorAll("#grid .card, #shot")].map(el => ({ el, cv: null, rim: null, wantHolo: !el.classList.contains("reel") && el.id !== "shot", rw: 0, rh: 0, lit: 0, glyph: el.dataset.glyph, hov: 0, hovT: 0, mx: .5, my: .5, rect: null, cells: null, w: 0, h: 0, rest: false }));
+// each card gets its two canvases (the lit rim and the hologram field) only while it is on or next to the screen;
+// off-screen cards hold none, so a long page never paints more than a few at once
+const mkCv = cls => { const c = document.createElement("canvas"); c.className = cls; c.setAttribute("aria-hidden", "true"); return c; };
+const cardIO = new IntersectionObserver(es => es.forEach(e => {
+  const k = CARDS.find(q => q.el === e.target); if (!k) return;
+  if (e.isIntersecting) {
+    if (!k.rim) { k.rim = mkCv("rim"); k.el.prepend(k.rim); if (k.wantHolo) { k.cv = mkCv("holo"); k.el.prepend(k.cv); } k.rw = k.rh = 0; k.cells = null; }
+  } else {
+    if (k.rim) { k.rim.remove(); k.rim = null; } if (k.cv) { k.cv.remove(); k.cv = null; } k.cells = null;
+  }
+}), { rootMargin: "100px 0px" });
+CARDS.forEach(k => cardIO.observe(k.el));
 function measureCards() { const sy = scrollY; CARDS.forEach(k => { const r = k.el.getBoundingClientRect(); k.rect = { x: r.left, y: r.top + sy, w: r.width, h: r.height }; }); }
 new ResizeObserver(() => { measureCards(); CARDS.forEach(k => k.cells = null); }).observe(document.getElementById("works"));
 addEventListener("cardsmoved", () => { requestAnimationFrame(() => { measureCards(); layoutLight(); CARDS.forEach(k => k.cells = null); }); });
@@ -1671,7 +1683,7 @@ function perimeter(w, h, r) {
 function lightCards() {
   const night = root.getAttribute("data-sky") === "night", vh = innerHeight, sy = scrollY;
   for (const k of CARDS) {
-    if (!k.rect || !k.rect.w || k.el.classList.contains("gone")) continue;
+    if (!k.rim || !k.rect || !k.rect.w || k.el.classList.contains("gone")) continue;
     const { x, y, w, h } = k.rect;
     if (y - sy > vh || y + h - sy < 0) continue;
     const c = k.rim.getContext("2d");

@@ -20,20 +20,20 @@
 .mg-bg{position:absolute;inset:-200px;background:repeating-linear-gradient(-32deg,rgba(255,212,0,.05) 0 60px,transparent 60px 150px),radial-gradient(900px 700px at 80% 10%,rgba(255,106,0,.28),transparent 70%),radial-gradient(800px 800px at 10% 95%,rgba(255,212,0,.16),transparent 70%),#0d0d0f}
 .mg-grain{position:absolute;inset:0;opacity:.08;background-image:radial-gradient(rgba(255,255,255,.6) 1px,transparent 1px);background-size:6px 6px}
 .mg-top{position:absolute;left:72px;right:72px;top:70px;display:flex;justify-content:space-between;align-items:center;font:600 30px/1 "Geist Mono",ui-monospace,monospace;letter-spacing:.14em;color:rgba(255,255,255,.7);text-transform:uppercase}
-.mg-top b{color:#0d0d0f;background:#ffd400;padding:12px 18px;border-radius:12px;font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;font-size:38px;letter-spacing:.02em}
+.mg-top b{color:#0d0d0f;background:#ffd400;padding:12px 18px;border-radius:12px;font-family:"Geist",system-ui,sans-serif;font-weight:400;font-size:38px;letter-spacing:.02em}
 .mg-sc{position:absolute;inset:0;opacity:0;visibility:hidden}
-.mg .hd{font-family:"Anton",Impact,"Arial Narrow Bold","Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;line-height:.98;letter-spacing:.005em}
+.mg .hd{font-family:"Geist",system-ui,sans-serif;font-weight:400;text-transform:uppercase;line-height:.98;letter-spacing:.005em}
 .mg .y{color:#ffd400}.mg .o{color:#ff6a00}
 .mg .k{font:600 34px/1 "Geist Mono",ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:#ffd400}
 .mg .ab{position:absolute;left:72px;right:72px}
-.mg .big{font-size:150px}.mg .mid{font-size:96px}
+.mg .big{font-size:106px}.mg .mid{font-size:70px}
 .mg .sub{font-size:44px;line-height:1.3;color:rgba(255,255,255,.82);font-weight:500}
 .mg .nos{display:flex;flex-wrap:wrap;gap:22px}
 .mg .nos span{position:relative;font:600 46px/1 "Geist",sans-serif;padding:22px 30px;border-radius:999px;border:3px solid rgba(255,255,255,.35)}
 .mg .nos span i{position:absolute;left:18px;right:18px;top:50%;height:6px;margin-top:-3px;background:#ff6a00;border-radius:3px;transform-origin:left;transform:scaleX(0)}
-.mg .num{position:absolute;left:66px;top:170px;font-family:"Anton",Impact,sans-serif;font-size:300px;line-height:1;color:#ffd400}
+.mg .num{position:absolute;left:66px;top:170px;font-family:"Geist",system-ui,sans-serif;font-size:300px;line-height:1;color:#ffd400}
 .mg .of{position:absolute;left:72px;top:480px;font:600 36px/1 "Geist Mono",monospace;letter-spacing:.14em;color:rgba(255,255,255,.55)}
-.mg .ttl{position:absolute;left:72px;right:72px;top:560px;font-size:112px}
+.mg .ttl{position:absolute;left:72px;right:72px;top:560px;font-size:82px}
 .mg .st .sub{position:absolute;left:72px;right:72px;top:700px}
 .mg .ill{position:absolute;left:72px;right:72px;top:900px;height:820px}
 .mg .mg-card{position:absolute;background:#fff;color:#14161a;border-radius:36px;box-shadow:0 40px 80px rgba(0,0,0,.45)}
@@ -57,12 +57,13 @@
 .mg .head{position:absolute;top:-20px;bottom:-20px;width:6px;background:#ff3b30;border-radius:3px}
 .mg .bar{height:44px;border-radius:22px;background:rgba(255,255,255,.12);overflow:hidden}
 .mg .bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd400,#ff6a00)}
-.mg .logo{font-family:"Anton",Impact,sans-serif;font-size:210px;line-height:.86;color:#ffd400;transform:skewX(-8deg);text-shadow:10px 10px 0 #ff6a00}
+.mg .logo{font-family:"Geist",system-ui,sans-serif;font-size:150px;line-height:.9;color:#ffd400;transform:skewX(-8deg);text-shadow:10px 10px 0 #ff6a00}
 .mg .typo{position:relative;height:150px}
-.mg .typo span{position:absolute;left:0;top:0;font-family:"Anton",Impact,sans-serif;font-size:128px;line-height:1;white-space:nowrap}
+.mg .typo span{position:absolute;left:0;top:0;font-family:"Geist",system-ui,sans-serif;font-size:88px;line-height:1;white-space:nowrap}
 .mg .typo .bad{color:#ff5a4f;text-decoration:underline wavy #ff5a4f;text-decoration-thickness:6px;text-underline-offset:18px}
 .mg .typo .good{color:#2fdd86}
 .mg .chk .row{font-size:56px;margin-top:34px}
+.mg .hd,.mg .num,.mg .logo,.mg .typo span,.mg-top b{font-weight:800;letter-spacing:-.025em}
 `;
   let styled = false;
   const injectCSS = () => { if (styled) return; styled = true; const s = document.createElement("style"); s.textContent = CSS; document.head.appendChild(s); };
@@ -87,7 +88,7 @@
       worried: ["ai-ad-worried-character", "AI ad still: the character looking worried"],
       product: ["ai-ad-3-in-1-charger", "AI ad still: the 3-in-1 magnetic wireless charger"],
       listing: ["ai-ad-shopify-listing", "AI ad still: the charger's real listing on crazyclearance.uk"] };
-    const img = n => `<img src="${base}${FILES[n][0]}.webp" alt="${FILES[n][1]}" width="540" height="960" loading="lazy" decoding="async">`;
+    const img = n => `<img src="${base}${FILES[n][0]}.webp" alt="${FILES[n][1]}" width="540" height="960" decoding="async">`;
     const step = (i, ill) => `<div class="mg-sc st" data-s="${i}"><div class="num">${String(i + 1).padStart(2, "0")}</div><div class="of">STEP ${i + 1} OF 10</div><div class="hd ttl">${STEPS[i][0]}</div><div class="sub">${STEPS[i][1]}</div><div class="ill">${ill}</div></div>`;
     return `<div class="mg-stage"><div class="mg-bg"></div><div class="mg-grain"></div>
 <div class="mg-top"><b>CRAZY CLEARANCE</b><span>AI video · workflow</span></div>
@@ -133,7 +134,7 @@ ${step(9, `<div class="mg-card" style="left:40px;right:40px;top:40px;padding:50p
   <div style="display:flex;justify-content:space-between;align-items:center;font:700 46px/1 'Geist',sans-serif"><span>Export</span><span class="tag" style="position:static">4K · 2160 × 3840</span></div>
   <div class="bar" style="margin-top:56px"><b data-a="bar"></b></div><div style="margin-top:22px;font:600 38px/1 'Geist Mono',monospace;color:rgba(255,255,255,.7)" data-a="pct">0%</div></div>
   <div style="position:absolute;left:40px;right:40px;top:480px;display:flex;justify-content:space-between;gap:18px">${["Instagram", "Facebook", "TikTok"].map((n, k) => `<span class="pill" data-a="pl${k}" style="flex:1;justify-content:center">${n}</span>`).join("")}</div>
-  <div class="hd y" data-a="posted" style="position:absolute;left:0;right:0;top:640px;text-align:center;font-size:120px">POSTED ✓</div>`)}
+  <div class="hd y" data-a="posted" style="position:absolute;left:0;right:0;top:640px;text-align:center;font-size:92px">POSTED ✓</div>`)}
 <div class="mg-sc" data-s="gold"><div class="ab k" style="top:430px" data-a="g0">Our golden rule</div>
   <div class="ab hd big" style="top:520px" data-a="g1">AI tells<br>the story.</div>
   <div class="ab hd big y" style="top:840px" data-a="g2">The facts<br>stay real.</div>
@@ -144,7 +145,7 @@ ${step(9, `<div class="mg-card" style="left:40px;right:40px;top:40px;padding:50p
 <div class="mg-sc" data-s="end"><div class="ab logo" style="top:470px" data-a="e1">CRAZY<br>CLEARANCE</div>
   <div class="ab sub" style="top:960px;font-size:54px" data-a="e2">3 new channels, built only for AI video ads</div>
   <div class="ab" style="top:1140px;display:flex;gap:18px;flex-wrap:wrap" data-a="e3"><span class="pill">Instagram</span><span class="pill">Facebook</span><span class="pill">TikTok</span></div>
-  <div class="ab hd y" style="top:1380px;font-size:96px" data-a="e4">crazyclearance.uk</div></div>
+  <div class="ab hd y" style="top:1380px;font-size:70px" data-a="e4">crazyclearance.uk</div></div>
 <div class="rail">${"<i><b></b></i>".repeat(10)}</div></div>`;
   }
 

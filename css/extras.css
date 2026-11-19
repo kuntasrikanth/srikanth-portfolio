@@ -19,3 +19,9 @@
 /* case studies end on what happened */
 .card .result{margin:12px 0 0;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--chip);font-size:14px;line-height:1.5;color:var(--fg)}
 .card .result b{display:inline-block;margin-right:6px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* below the case studies: the way to the rest of the work */
+.more-work{display:flex;justify-content:center;margin:34px 0 0}
+.more-work a{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;border:1px solid var(--line);background:var(--chip);color:var(--fg);font:600 15px/1 var(--sans);text-decoration:none}
+.more-work a:hover{transform:translateY(-1px)}
+.more-work a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}

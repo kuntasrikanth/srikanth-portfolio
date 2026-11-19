@@ -627,11 +627,11 @@ h1 em{font-style:italic}
   box-shadow:.22cqw .22cqw 0 #f4efe3,.42cqw .4cqw 0 #e6dfcf,.62cqw .58cqw 0 #f1ebde,.82cqw .76cqw 0 #ddd4c1,1.02cqw .94cqw 0 #efe8da,1.22cqw 1.12cqw 0 #4a181b}
 .thesis .tb::before{content:"";position:absolute;inset:1.1cqw 1.1cqw 1.1cqw 1.6cqw;border:1px solid rgba(230,207,147,.6);outline:1px solid rgba(230,207,147,.35);outline-offset:.3cqw;pointer-events:none}
 .thesis .crest{width:3.4cqw;height:4cqw;color:#e6cf93;margin-top:1cqw}
-.thesis .t{margin-top:1.6cqw;font-family:"STIX Two Text",var(--display);font-size:1.5cqw;line-height:1.25;letter-spacing:.06em;text-transform:uppercase;
+.thesis .t{margin-top:1.6cqw;font-family:var(--display);font-size:1.5cqw;line-height:1.25;letter-spacing:.06em;text-transform:uppercase;
   background:linear-gradient(180deg,#f3e2b0,#c9a85a 60%,#e8d39a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .thesis .r{width:5cqw;height:1px;background:rgba(230,207,147,.6);margin:1.4cqw 0}
-.thesis .a{font-family:"STIX Two Text",var(--display);font-size:1.15cqw;letter-spacing:.24em}
-.thesis .d{margin-top:auto;font-family:"STIX Two Text",var(--display);font-style:italic;font-size:.95cqw;opacity:.85}
+.thesis .a{font-family:var(--display);font-size:1.15cqw;letter-spacing:.24em}
+.thesis .d{margin-top:auto;font-family:var(--display);font-style:italic;font-size:.95cqw;opacity:.85}
 .thesis .rib{position:absolute;left:62%;bottom:-3.4cqw;width:1.3cqw;height:4.6cqw;background:linear-gradient(90deg,#1f3a63,#2e5591 50%,#1f3a63);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%);z-index:-1}
 .thesis .tab{z-index:2}
 @container (max-width:640px){
@@ -641,7 +641,7 @@ h1 em{font-style:italic}
   .thesis .rib{width:2.6cqw;height:9cqw;bottom:-7cqw}
 }
 /* ---------- the open thesis ---------- */
-.room .book{--th:"STIX Two Text","Iowan Old Style",Georgia,serif}
+.room .book{--th:var(--display)}
 .face{font-family:var(--th)}
 .face .run{font-family:var(--th);font-style:italic;font-size:.8em;letter-spacing:0;text-transform:none;color:#6c655c}
 .face h5{font-family:var(--th);font-weight:600;font-size:1.9em}
@@ -685,7 +685,7 @@ h1 em{font-style:italic}
 .face .feyn text{font-family:var(--th);font-style:italic;font-size:20px;fill:currentColor}
 .face .crest{width:16%;height:auto;color:#7a1f22;display:block;margin:0 auto}
 /* manuscript pages: parchment, iron-gall ink, quill hand (after Newton's notebooks); covers and endpapers stay as they are */
-.room .book{--ink:#3a2414;--ink2:#7a5a3a;--hand:"Dawning of a New Day","Homemade Apple",cursive;--fell:"IM Fell English","STIX Two Text",Georgia,serif;
+.room .book{--ink:#3a2414;--ink2:#7a5a3a;--hand:var(--display);--fell:var(--display);
   --stains:radial-gradient(40% 28% at 82% 14%,rgba(150,100,40,.13),transparent 70%),radial-gradient(34% 24% at 14% 86%,rgba(120,80,30,.11),transparent 70%),radial-gradient(130% 110% at 50% 50%,transparent 58%,rgba(120,80,30,.2))}
 .room .face.a:not(.cover):not(.endp){background:linear-gradient(90deg,rgba(60,30,0,.16),transparent 7%),var(--stains),#ecdfc2;color:var(--ink)}
 .room .face.b:not(.cover):not(.endp){background:linear-gradient(270deg,rgba(60,30,0,.16),transparent 7%),var(--stains),#ecdfc2;color:var(--ink)}
@@ -941,7 +941,7 @@ h1 em{font-style:italic}
 /* soft scribble hint: a handwritten "click me" / "drag me" with a hand-drawn arrow, shown on hover over anything you can play with */
 .hero-image.portrait{overflow:visible}.hero-image.portrait img{border-radius:inherit}
 #hint{position:fixed;left:0;top:0;z-index:55;pointer-events:none;display:flex;align-items:flex-end;color:var(--fg);opacity:0;white-space:nowrap;
-  font:500 22px/1 "Caveat",cursive;transform:translate(4px,-100%) translate(0,6px) scale(.96);transform-origin:0 100%;
+  font:italic 400 22px/1 var(--display);transform:translate(4px,-100%) translate(0,6px) scale(.96);transform-origin:0 100%;
   transition:opacity .4s cubic-bezier(.65,0,.35,1),transform .5s cubic-bezier(.65,0,.35,1)}
 #hint.on{opacity:.78;transform:translate(4px,-100%)}
 #hint.sky{color:#fff;text-shadow:0 1px 8px rgba(0,25,60,.35)}#hint.sky svg{filter:drop-shadow(0 1px 4px rgba(0,25,60,.3))}

@@ -34,7 +34,7 @@ navSpy();
   const more = document.createElement("button"); more.type = "button"; more.className = "cats-more"; more.setAttribute("aria-label", "Show more categories");
   more.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
   box.appendChild(more);
-  const edge = () => { const over = tabs.scrollWidth > tabs.clientWidth + 4; box.classList.toggle("more", over && tabs.scrollLeft + tabs.clientWidth < tabs.scrollWidth - 4); box.classList.toggle("less", over && tabs.scrollLeft > 4); };
+  const edge = () => { const over = tabs.scrollWidth > tabs.clientWidth + 4; box.classList.toggle("ovf-end", over && tabs.scrollLeft + tabs.clientWidth < tabs.scrollWidth - 4); box.classList.toggle("ovf-start", over && tabs.scrollLeft > 4); };
   tabs.addEventListener("scroll", edge, { passive: true }); new ResizeObserver(edge).observe(tabs); edge();
   more.addEventListener("click", () => tabs.scrollBy({ left: tabs.clientWidth * .7, behavior: "smooth" }));
   document.getElementById("when").insertAdjacentHTML("beforeend", '<svg class="rf" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2.5v3h-3"/></svg>');

@@ -1,6 +1,6 @@
 /* ================= Footer: the desk, the flip book, the CV ================= */
 // fill these in: empty values show "coming soon" instead of opening a link
-const CONTACT = { email: "kuntasrikanth00@gmail.com", github: "https://github.com/kuntasrikanth", linkedin: "https://www.linkedin.com/in/srikanthkunta", youtube: "https://www.youtube.com/@copy_the_facts_telugu" };
+const CONTACT = { email: "hello@srikanthkunta.co.uk", github: "https://github.com/kuntasrikanth", linkedin: "https://www.linkedin.com/in/srikanthkunta", youtube: "https://www.youtube.com/@copy_the_facts_telugu" };
 (() => {
   const toastEl = document.getElementById("ftoast"); let tt;
   const toast = m => { toastEl.textContent = m; toastEl.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => toastEl.classList.remove("on"), 2200); };

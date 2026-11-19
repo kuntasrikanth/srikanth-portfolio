@@ -25,3 +25,6 @@
 .more-work a{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;border:1px solid var(--line);background:var(--chip);color:var(--fg);font:600 15px/1 var(--sans);text-decoration:none}
 .more-work a:hover{transform:translateY(-1px)}
 .more-work a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* visitors who ask for less motion: no animations or transitions anywhere (the sky, motion graphic and videos also stop in JS) */
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
